@@ -2,6 +2,17 @@
 <!--THIS STILL NEEDS VALIDATION ADDED IN. IT JUST SPECIFIES THAT SOMETHING WAS ENTERED BUT MAYBE ATTEMPT TO VALIDATE BLANK && INCORRECT ENTRIES IF POSSIBLE-->
 <div id="main">
     <h1>Add Product</h1>
+    <div class="error">
+    <?php 
+    if(filter_has_var(INPUT_GET, 'error')) {
+        session_start();
+        $errors = $_SESSION['errors'];
+        foreach($errors as $error) {
+            echo $error . "<br>";
+        };
+    };
+    ?>
+    </div>
     <form action="." method="post" id="aligned">
         <input type="hidden" name="action" value="add">
         <label>Code: </label>
