@@ -1,6 +1,4 @@
 # PHP2_TechProject
-PHP Technician Project
-
 Due Dates: 
 6-1 / 6-5 : Feb 05, 2020
 
