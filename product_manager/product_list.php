@@ -23,6 +23,6 @@
             </tr>
         <?php endforeach; ?>
     </table>
-    <p><a href="?action=showAdd">Add Product</a></p>
+    <p><a href=".?action=showAdd">Add Product</a></p>
 </div>
 <?php include '../view/footer.php' ?>

@@ -15,4 +15,14 @@ if($action === 'listTechs') {
     include 'technician_list.php';
 }
 
+if($action === 'delete') {
+    $techID = filter_input(INPUT_POST, 'techID');
+    deleteTech($techID);
+    header('Location: .');
+}
+
+if($action === 'showAdd') {
+    header("Location: technician_add.php");
+}
+
 ?>
