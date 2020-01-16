@@ -6,7 +6,7 @@ function getCustomers() {
 
 function getSearchResults($search) {
     global $db;
-    $query = "SELECT * FROM customers WHERE lastName LIKE '%:search%'";
+    $query = "SELECT * FROM customers WHERE lastName LIKE CONCAT('%', :search, '%')";
     $statement = $db->prepare($query);
     $statement->bindValue(':search', $search);
     $statement->execute();
