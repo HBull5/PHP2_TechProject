@@ -19,8 +19,18 @@ function deleteTech($techID) {
     $statement->closeCursor();
 }
 
-function addTech() {
-    
+function addTech($fName, $lName, $email, $phone, $pass) {
+    global $db;
+    $query = 'INSERT INTO technicians (firstName, lastName, email, phone, `password`)
+              VALUES (:fName, :lName, :email, :phone, :pass)';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':fName', $fName);
+    $statement->bindValue(':lName', $lName);
+    $statement->bindValue(':email', $email);
+    $statement->bindValue(':phone', $phone);
+    $statement->bindValue(':pass', $pass);
+    $statement->execute();
+    $statement->closeCursor();
 }
 
 
