@@ -32,6 +32,7 @@ $results = getSearchResults($search);
                 <td><?php echo $result['email']; ?></td>
                 <td><?php echo $result['city']; ?></td>
                 <form action="." method="post">
+                    <input type="hidden" name="action" value="updateCustomers">
                     <input type="hidden" name="custID" value="<?php echo $result['customerID']; ?>">
                     <td><input type="submit" value="Select"></td>
                 </form>

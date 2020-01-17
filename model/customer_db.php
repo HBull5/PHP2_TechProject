@@ -1,9 +1,5 @@
 <?php
 
-function getCustomers() {
-
-};
-
 function getSearchResults($search) {
     global $db;
     $query = "SELECT * FROM customers WHERE lastName LIKE CONCAT('%', :search, '%')";
@@ -15,10 +11,20 @@ function getSearchResults($search) {
     return $results;
 };
 
-function selectCustomer() {
-
+function getCustomer($custID) {
+    global $db;
+    $query = "SELECT * FROM customers WHERE customerID = :custID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':custID', $custID);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    $statement->closeCursor();
+    return $results;
 };
 
-// Additional functions for view/update customer go here
+// function updateCustomer($fName, $lName, $address, $city, $state, $zip, $country, $phone, $email, $pass) {
+//     global $db;
+//     $query = ""
+// };
 
 ?>
