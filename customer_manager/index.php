@@ -27,22 +27,23 @@ if($action === 'updateCustomers') {
 
 if($action === 'update') {
     $errors = [];
-    $f = filter_input(INPUT_POST, 'firstName');
-    $l = filter_input(INPUT_POST, 'lastName');
+    $custID = filter_input(INPUT_POST, 'custID');
+    $f = filter_input(INPUT_POST, 'fName');
+    $l = filter_input(INPUT_POST, 'lName');
     $a = filter_input(INPUT_POST, 'address');
     $c = filter_input(INPUT_POST, 'city');
     $s = filter_input(INPUT_POST, 'state');
-    $pC = filter_input(INPUT_POST, 'postalCode');
-    $cC = filter_input(INPUT_POST, 'countryCode');
+    $pC = filter_input(INPUT_POST, 'zip');
+    $cC = filter_input(INPUT_POST, 'country');
     $ph = filter_input(INPUT_POST, 'phone');
     $e = filter_input(INPUT_POST, 'email');
-    $pass = filter_input(INPUT_POST, 'password');
+    $pass = filter_input(INPUT_POST, 'pass');
 
     if(empty($f)) {
         array_push($errors, '**First Name field is empty**');
     } else {
         if((strlen($f)) <= 50) {
-            $f = $fName;
+            $fName = $f;
         } else {
             array_push($errors, '**First Name exceeds 50 chars**');
         };
@@ -52,17 +53,17 @@ if($action === 'update') {
         array_push($errors, '**Last Name field is empty**');
     } else {
         if((strlen($l)) <= 50) {
-            $l = $lName;
+            $lName = $l;
         } else {
             array_push($errors, '**Last Name exceeds 50 chars**');
         };
     };
 
     if(empty($a)) {
-        array_push($errors, '**First Name field is empty**');
+        array_push($errors, '**Address Name field is empty**');
     } else {
         if((strlen($a)) <= 50) {
-            $a = $address;
+            $address = $a;
         } else {
             array_push($errors, '**Address exceeds 50 chars**');
         };
@@ -72,7 +73,7 @@ if($action === 'update') {
         array_push($errors, '**City field is empty**');
     } else {
         if((strlen($c)) <= 50) {
-            $c = $city;
+            $city = $c;
         } else {
             array_push($errors, '**City exceeds 50 chars**');
         };
@@ -82,7 +83,7 @@ if($action === 'update') {
         array_push($errors, '**State field is empty**');
     } else {
         if((strlen($s)) <= 50) {
-            $s = $state;
+            $state = $s;
         } else {
             array_push($errors, '**State exceeds 50 chars**');
         };
@@ -92,7 +93,7 @@ if($action === 'update') {
         array_push($errors, '**Postal Code field is empty**');
     } else {
         if((strlen($pC)) <= 20) {
-            $pC = $postalCode;
+            $postalCode = $pC;
         } else {
             array_push($errors, '**Postal Code exceeds 20 chars**');
         };
@@ -102,7 +103,7 @@ if($action === 'update') {
         array_push($errors, '**Country Code field is empty**');
     } else {
         if((strlen($cC)) <= 2) {
-            $cC = $countryCode;
+            $countryCode = $cC;
         } else {
             array_push($errors, '**Country Code exceeds 2 chars**');
         };
@@ -112,7 +113,7 @@ if($action === 'update') {
         array_push($errors, '**Phone field is empty**');
     } else {
         if((strlen($ph)) <= 20) {
-            $ph = $phone;
+            $phone = $ph;
         } else {
             array_push($errors, '**Phone exceeds 20 chars**');
         };
@@ -122,7 +123,7 @@ if($action === 'update') {
         array_push($errors, '**Email field is empty**');
     } else {
         if((strlen($e)) <= 50) {
-            $e = $email;
+            $email = $e;
         } else {
             array_push($errors, '**Email exceeds 50 chars**');
         };
@@ -132,13 +133,22 @@ if($action === 'update') {
         array_push($errors, '**Password field is empty**');
     } else {
         if((strlen($f)) <= 20) {
-            $pass = $password;
+            $password = $pass;
         } else {
             array_push($errors, '**Password exceeds 20 chars**');
         };
     };
 
-    
+    if(!empty($fName) && !empty($lName) && !empty($address) && !empty($city) && !empty($state) && !empty($postalCode) && !empty($countryCode) && !empty($phone) && !empty($email) && !empty($password)) {
+        updateCustomer($custID, $fName, $lName, $address, $city, $state, $postalCode, $countryCode, $phone, $email, $password);
+        header("Location: customer_list.php?search=");
+    } else {
+        session_start();
+        $_SESSION['errors'] = $errors;
+        header("Location: customer_update.php?error");
+    };
+
+
 };
 
 ?>

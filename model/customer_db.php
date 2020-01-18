@@ -22,9 +22,23 @@ function getCustomer($custID) {
     return $results;
 };
 
-// function updateCustomer($fName, $lName, $address, $city, $state, $zip, $country, $phone, $email, $pass) {
-//     global $db;
-//     $query = ""
-// };
+function updateCustomer($custID, $fName, $lName, $address, $city, $state, $zip, $country, $phone, $email, $pass) {
+    global $db;
+    $query = "UPDATE customers SET firstName = :fName, lastName = :lName, `address` = :address, city = :city, `state` = :state, postalCode = :zip, countryCode = :country, phone = :phone, email = :email, `password` = :pass WHERE customerID = :custID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':custID', $custID);
+    $statement->bindValue(':fName', $fName);
+    $statement->bindValue(':lName', $lName);
+    $statement->bindValue(':address', $address);
+    $statement->bindValue(':city', $city);
+    $statement->bindValue(':state', $state);
+    $statement->bindValue(':zip', $zip);
+    $statement->bindValue(':country', $country);
+    $statement->bindValue(':phone', $phone);
+    $statement->bindValue(':email', $email);
+    $statement->bindValue(':pass', $pass);
+    $statement->execute();
+    $statement->closeCursor();
+};
 
 ?>

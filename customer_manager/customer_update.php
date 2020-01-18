@@ -4,12 +4,21 @@
     session_start();
     $customer = $_SESSION['customer'];
     $customer = $customer[0];
+    $errors = $_SESSION['errors'];
 ?>
 
 <div id="main">
     <h1>View/Update Customer</h1>
+    <div class="error">
+    <?php if(filter_has_var(INPUT_GET, 'error')) {
+        foreach($errors as $error) {
+            echo $error . "<br>";
+        };
+    } ?>
+    </div>
     <form action="." method="post" id="aligned">
         <input type="hidden" name="action" value="update">
+        <input type="hidden" name="custID" value="<?php echo $customer['customerID'] ?>">
         <label>First Name: </label>
         <input type="text" name="fName" value="<?php echo $customer['firstName'] ?>">
         <br>
