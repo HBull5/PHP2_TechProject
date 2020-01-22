@@ -28,7 +28,7 @@ $results = getSearchResults($search);
         </tr>
         <?php foreach($results as $result) : ?>
             <tr>
-                <td><?php echo $result['firstName']; ?></td>
+                <td><?php echo $result['firstName'] . " " . $result['lastName']; ?></td>
                 <td><?php echo $result['email']; ?></td>
                 <td><?php echo $result['city']; ?></td>
                 <form action="." method="post">

@@ -4,13 +4,13 @@
     session_start();
     $customer = $_SESSION['customer'];
     $customer = $customer[0];
-    $errors = $_SESSION['errors'];
 ?>
 
 <div id="main">
     <h1>View/Update Customer</h1>
     <div class="error">
     <?php if(filter_has_var(INPUT_GET, 'error')) {
+        $errors = $_SESSION['errors'];
         foreach($errors as $error) {
             echo $error . "<br>";
         };
