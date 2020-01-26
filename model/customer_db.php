@@ -17,10 +17,20 @@ function getCustomer($custID) {
     $statement = $db->prepare($query);
     $statement->bindValue(':custID', $custID);
     $statement->execute();
-    $results = $statement->fetchAll();
+    $results = $statement->fetch();
     $statement->closeCursor();
     return $results;
 };
+
+function getCustomerID($email) {
+    global $db;
+    $query = "SELECT customerID FROM customers WHERE email = :email";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':email', $email);
+    $statement->execute();
+    $custID = $statement->fetchColumn();
+    return $custID;
+}
 
 function updateCustomer($custID, $fName, $lName, $address, $city, $state, $zip, $country, $phone, $email, $pass) {
     global $db;

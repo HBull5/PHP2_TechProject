@@ -3,7 +3,6 @@
 <?php 
     session_start();
     $customer = $_SESSION['customer'];
-    $customer = $customer[0];
 ?>
 
 <div id="main">

@@ -1,15 +1,19 @@
-<?php include '../view/header.php';?>
+<?php 
+include '../view/header.php';
+$registeredProducts = getRegisteredProducts($custID);
+$unregisteredProducts = getUnregisteredProducts($registeredProducts);
+?>
 <div id="main">
     <h1>Register Product</h1>
     <form action="." method="post" id="aligned">
         <input type="hidden" name="action" value="complete">
         <label>Customer:</label>
-        <label><?php echo "Kelly irvin"; ?></label> 
+        <label><?php echo $customer['firstName'] . " " . $customer['lastName'] ?></label> 
         <br>
         <label>Product:</label>
         <select name="productName">
-            <?php foreach($products as $product) : ?>
-                <option value="<?php echo $product['name']?>"><?php echo $product['name']?></option>
+            <?php foreach($unregisteredProducts as $product) : ?>
+                <option value="<?php echo $product ?>"><?php echo $product ?></option>
             <?php endforeach; ?>
         </select>
         <br>
