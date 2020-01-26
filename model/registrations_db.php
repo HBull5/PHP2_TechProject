@@ -1,11 +1,11 @@
 <?php 
 
-function registerProduct($custID, $productCode) {
+function registerProduct($custID, $code) {
     global $db;
     $query = "INSERT INTO registrations VALUES(:customerID, :productCode, NOW())";
     $statement = $db->prepare($query);
     $statement->bindValue(':customerID', $custID);
-    $statement->bindValue(':productCode', $productCode);
+    $statement->bindValue(':productCode', $code);
     $statement->execute();
     $statement->closeCursor();
 }

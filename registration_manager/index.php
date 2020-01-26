@@ -40,8 +40,10 @@ if($action === 'register') {
 };
 
 if($action === 'complete') {
+    $custID = filter_input(INPUT_POST, 'custID');
     $productName = filter_input(INPUT_POST, 'productName');
     $code = getProductCode($productName);
-    
+    registerProduct($custID, $code);
+    header("Location: success.php?code=".$code);
 }
 ?>

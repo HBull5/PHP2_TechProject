@@ -7,6 +7,7 @@ $unregisteredProducts = getUnregisteredProducts($registeredProducts);
     <h1>Register Product</h1>
     <form action="." method="post" id="aligned">
         <input type="hidden" name="action" value="complete">
+        <input type="hidden" name="custID" value="<?php echo $custID ?>">
         <label>Customer:</label>
         <label><?php echo $customer['firstName'] . " " . $customer['lastName'] ?></label> 
         <br>
