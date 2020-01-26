@@ -17,7 +17,7 @@
 
     <h2>Customers</h2>
     <ul class="nav">
-        <li><a href="under_construction.php">Register Product</a></li>
+        <li><a href="registration_manager">Register Product</a></li>
     </ul>
 </div>
 <?php include 'view/footer.php'; ?>

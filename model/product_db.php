@@ -5,7 +5,18 @@ function getProducts() {
     $query = 'SELECT * FROM products';
     $statement = $db->prepare($query);
     $statement->execute();
-    return $statement;
+    $products = $statement->fetchAll();
+    return $products;
+}
+
+function getProductCode($productName) {
+    global $db;
+    $query = 'SELECT productCode FROM products WHERE name = :name';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':name', $productName);
+    $statement->execute();
+    $code = $statement->fetchColumn();
+    return $code;
 }
 
 function deleteProducts($code) {
@@ -27,7 +38,6 @@ function addProduct($code, $name, $version, $date) {
     $statement->bindValue(':code', $code);
     $statement->bindValue(':name', $name);
     $statement->bindValue(':version', $version);
-    // I was unable to use GETDATE() function and it was throwing a fit for some reason why? I took screenshots
     $statement->bindValue(':releaseDate', $date);
     $statement->execute();
     $statement->closeCursor();
