@@ -19,6 +19,16 @@ function getProductCode($productName) {
     return $code;
 }
 
+function getProductName($code) {
+    global $db;
+    $query = 'SELECT name FROM products WHERE productCode = :productCode';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':productCode', $code);
+    $statement->execute();
+    $name = $statement->fetchColumn();
+    return $name;
+}
+
 function deleteProducts($code) {
     global $db; 
     $query = 'DELETE FROM products
