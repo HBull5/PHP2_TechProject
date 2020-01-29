@@ -3,6 +3,7 @@ require('../model/database.php');
 require('../model/customer_db.php');
 require('../model/registrations_db.php');
 require('../model/product_db.php');
+require('../model/incidents_db.php');
 
 $action = filter_input(INPUT_POST, 'action');
 
@@ -38,6 +39,17 @@ if($action === 'createIncident') {
             include 'create_incident.php';
         }
     }
+};
+
+// Needs Error handling / validation of input
+if($action === 'complete') {
+    $errors = [];
+    $custID = filter_input(INPUT_POST, 'custID');
+    $code = filter_input(INPUT_POST, 'code');
+    $title = filter_input(INPUT_POST, 'title');
+    $description = filter_input(INPUT_POST, 'description');
+    createNewIncident($custID, $code, $title, $description);
+    header("Location: success.php");
 };
 
 ?>
