@@ -22,6 +22,6 @@
         <div id="header">
             <h1>SportsPro Technical Support</h1>
             <p>Sports management software for the sports enthusiast</p>
-            <ul class="nav"><li><a href="<?php echo $cd; ?>">HOME</a></li></ul>
+            <ul class="nav"><li><a href="<?php echo $cd; ?>">HOME</a></li><li><a href="..">Back</a></li></ul>
         </div>
        
