@@ -45,5 +45,5 @@ if($action === 'complete') {
     $code = getProductCode($productName);
     registerProduct($custID, $code);
     header("Location: success.php?code=".$code);
-}
+};
 ?>

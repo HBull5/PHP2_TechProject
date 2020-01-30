@@ -28,127 +28,84 @@ if($action === 'updateCustomers') {
 if($action === 'update') {
     $errors = [];
     $custID = filter_input(INPUT_POST, 'custID');
-    $f = filter_input(INPUT_POST, 'fName');
-    $l = filter_input(INPUT_POST, 'lName');
-    $a = filter_input(INPUT_POST, 'address');
-    $c = filter_input(INPUT_POST, 'city');
-    $s = filter_input(INPUT_POST, 'state');
-    $pC = filter_input(INPUT_POST, 'zip');
-    $cC = filter_input(INPUT_POST, 'country');
-    $ph = filter_input(INPUT_POST, 'phone');
-    $e = filter_input(INPUT_POST, 'email');
-    $pass = filter_input(INPUT_POST, 'pass');
+    $fName = filter_input(INPUT_POST, 'fName');
+    $lName = filter_input(INPUT_POST, 'lName');
+    $address = filter_input(INPUT_POST, 'address');
+    $city = filter_input(INPUT_POST, 'city');
+    $state = filter_input(INPUT_POST, 'state');
+    $postalCode = filter_input(INPUT_POST, 'zip');
+    $countryCode = filter_input(INPUT_POST, 'country');
+    $phone = filter_input(INPUT_POST, 'phone');
+    $email = filter_input(INPUT_POST, 'email');
+    $password = filter_input(INPUT_POST, 'pass');
 
-    if(empty($f)) {
+    if(empty($fName)) {
         array_push($errors, '**First Name field is empty**');
-    } else {
-        if((strlen($f)) <= 50) {
-            $fName = $f;
-        } else {
-            array_push($errors, '**First Name exceeds 50 chars**');
-        };
+    } elseif((strlen($fName)) > 50) {
+        array_push($errors, '**First Name exceeds 50 chars**');
     };
 
-    if(empty($l)) {
+    if(empty($lName)) {
         array_push($errors, '**Last Name field is empty**');
-    } else {
-        if((strlen($l)) <= 50) {
-            $lName = $l;
-        } else {
-            array_push($errors, '**Last Name exceeds 50 chars**');
-        };
+    } elseif((strlen($lName)) > 50) {
+        array_push($errors, '**Last Name exceeds 50 chars**');
     };
 
-    if(empty($a)) {
+    if(empty($address)) {
         array_push($errors, '**Address Name field is empty**');
-    } else {
-        if((strlen($a)) <= 50) {
-            $address = $a;
-        } else {
-            array_push($errors, '**Address exceeds 50 chars**');
-        };
+    } elseif((strlen($address)) > 50) {
+        array_push($errors, '**Address exceeds 50 chars**');
     };
 
-    if(empty($c)) {
+    if(empty($city)) {
         array_push($errors, '**City field is empty**');
-    } else {
-        if((strlen($c)) <= 50) {
-            $city = $c;
-        } else {
-            array_push($errors, '**City exceeds 50 chars**');
-        };
+    } elseif((strlen($city)) > 50) {
+        array_push($errors, '**City exceeds 50 chars**');
     };
 
-    if(empty($s)) {
+    if(empty($state)) {
         array_push($errors, '**State field is empty**');
-    } else {
-        if((strlen($s)) <= 50) {
-            $state = $s;
-        } else {
-            array_push($errors, '**State exceeds 50 chars**');
-        };
+    } elseif((strlen($state)) > 2) {
+        array_push($errors, '**State exceeds 2 chars**');
     };
 
-    if(empty($pC)) {
+    if(empty($postalCode)) {
         array_push($errors, '**Postal Code field is empty**');
-    } else {
-        if((strlen($pC)) <= 20) {
-            $postalCode = $pC;
-        } else {
-            array_push($errors, '**Postal Code exceeds 20 chars**');
-        };
+    } elseif((strlen($postalCode)) > 20) {
+        array_push($errors, '**Postal Code exceeds 20 chars**');
     };
 
-    if(empty($cC)) {
+    if(empty($countryCode)) {
         array_push($errors, '**Country Code field is empty**');
-    } else {
-        if((strlen($cC)) <= 2) {
-            $countryCode = $cC;
-        } else {
-            array_push($errors, '**Country Code exceeds 2 chars**');
-        };
+    } elseif((strlen($countryCode)) > 2) {
+        array_push($errors, '**Country Code exceeds 2 chars**');
     };
 
-    if(empty($ph)) {
+    if(empty($phone)) {
         array_push($errors, '**Phone field is empty**');
-    } else {
-        if((strlen($ph)) <= 20) {
-            $phone = $ph;
-        } else {
-            array_push($errors, '**Phone exceeds 20 chars**');
-        };
+    } elseif(!preg_match("/((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/", $phone)) {
+        array_push($errors, '**Phone must be (XXX) XXX-XXXX**');
     };
 
-    if(empty($e)) {
+    if(empty($email)) {
         array_push($errors, '**Email field is empty**');
-    } else {
-        if((strlen($e)) <= 50) {
-            $email = $e;
-        } else {
-            array_push($errors, '**Email exceeds 50 chars**');
-        };
+    } elseif((strlen($email)) > 50) {
+        array_push($errors, '**Email exceeds 50 chars**');
     };
 
-    if(empty($pass)) {
+    if(empty($password)) {
         array_push($errors, '**Password field is empty**');
-    } else {
-        if((strlen($f)) <= 20) {
-            $password = $pass;
-        } else {
-            array_push($errors, '**Password exceeds 20 chars**');
-        };
+    } elseif((strlen($password)) > 20) {
+        array_push($errors, '**Password exceeds 20 chars**');
     };
 
-    if(!empty($fName) && !empty($lName) && !empty($address) && !empty($city) && !empty($state) && !empty($postalCode) && !empty($countryCode) && !empty($phone) && !empty($email) && !empty($password)) {
+    if(empty($errors)) {
         updateCustomer($custID, $fName, $lName, $address, $city, $state, $postalCode, $countryCode, $phone, $email, $password);
-        header("Location: customer_list.php?search=");
+        header("Location: customer_list.php?search");
     } else {
         session_start();
         $_SESSION['errors'] = $errors;
         header("Location: customer_update.php?error");
     };
-
-
 };
-
 ?>

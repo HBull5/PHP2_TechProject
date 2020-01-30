@@ -1,5 +1,4 @@
 <?php 
-
 function createNewIncident($custID, $code, $title, $description) {
     global $db;
     $query = 'INSERT INTO incidents (customerID, productCode, dateOpened, title, description) VALUES(:customerID, :productCode, NOW(), :title, :description)';
@@ -10,6 +9,5 @@ function createNewIncident($custID, $code, $title, $description) {
     $statement->bindValue(':description', $description);
     $statement->execute();
     $statement->closeCursor();
-}
-
+};
 ?>

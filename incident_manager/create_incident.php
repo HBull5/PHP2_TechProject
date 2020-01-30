@@ -1,9 +1,26 @@
-<?php include '../view/header.php' ?>
+<?php include '../view/header.php'; ?>
 <div id="main">
 <h1>Create Incident</h1>
+<div class="error">
+<?php 
+    if(filter_has_var(INPUT_GET, 'errors')) {
+        require('../model/database.php');
+        require('../model/product_db.php');
+        session_start();
+        $errors = $_SESSION['errors'];
+        $custID = $_SESSION['custID'];
+        $customer = $_SESSION['customer'];
+        $registered = $_SESSION['registered'];
+        foreach($errors as $error) {
+            echo $error . "<br>";
+        }
+    };
+?>
+</div>
 <form action="." method="post" id="aligned">
     <input type="hidden" name="action" value="complete">
     <input type="hidden" name="custID" value="<?php echo $custID; ?>">
+    
     <label>Customer:</label>
     <label><?php echo $customer['firstName'] . " " . $customer['lastName'] ?></label>
     <br>

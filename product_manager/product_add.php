@@ -1,5 +1,4 @@
 <?php include '../view/header.php'; ?>
-<!--THIS STILL NEEDS VALIDATION ADDED IN. IT JUST SPECIFIES THAT SOMETHING WAS ENTERED BUT MAYBE ATTEMPT TO VALIDATE BLANK && INCORRECT ENTRIES IF POSSIBLE-->
 <div id="main">
     <h1>Add Product</h1>
     <div class="error">
@@ -9,7 +8,7 @@
         $errors = $_SESSION['errors'];
         foreach($errors as $error) {
             echo $error . "<br>";
-        };
+        }
     };
     ?>
     </div>

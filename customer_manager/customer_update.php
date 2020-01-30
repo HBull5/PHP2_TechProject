@@ -1,10 +1,8 @@
 <?php include '../view/header.php'; ?>
-
 <?php 
     session_start();
     $customer = $_SESSION['customer'];
 ?>
-
 <div id="main">
     <h1>View/Update Customer</h1>
     <div class="error">
@@ -12,7 +10,7 @@
         $errors = $_SESSION['errors'];
         foreach($errors as $error) {
             echo $error . "<br>";
-        };
+        }
     } ?>
     </div>
     <form action="." method="post" id="aligned">
@@ -54,5 +52,4 @@
     </form>
     <p><a href=".">Search Customers</a></p>
 </div>
-
 <?php include '../view/footer.php'; ?>

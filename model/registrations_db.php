@@ -1,5 +1,4 @@
 <?php 
-
 function registerProduct($custID, $code) {
     global $db;
     $query = "INSERT INTO registrations VALUES(:customerID, :productCode, NOW())";
@@ -8,7 +7,7 @@ function registerProduct($custID, $code) {
     $statement->bindValue(':productCode', $code);
     $statement->execute();
     $statement->closeCursor();
-}
+};
 
 function getRegisteredProducts($custID) {
     global $db; 
@@ -18,7 +17,7 @@ function getRegisteredProducts($custID) {
     $statement->execute();
     $registered = $statement->fetchAll(PDO::FETCH_COLUMN);
     return $registered;
-}
+};
 
 function getUnregisteredProducts(array $registeredProducts) {
     global $db;
@@ -35,6 +34,5 @@ function getUnregisteredProducts(array $registeredProducts) {
     $statement->execute();
     $unregistered = $statement->fetchAll(PDO::FETCH_COLUMN);
     return $unregistered;
-}
-
+};
 ?>

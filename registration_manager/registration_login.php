@@ -8,7 +8,7 @@
         $errors = $_SESSION['errors'];
         foreach($errors as $error) {
             echo $error . "<br>";
-        };
+        }
     };
     ?>
     </div>

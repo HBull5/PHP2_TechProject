@@ -1,5 +1,4 @@
 <?php 
-
 function getTechs() {
     global $db;
     $query = 'SELECT * FROM technicians';
@@ -8,7 +7,7 @@ function getTechs() {
     $technicians = $statement->fetchAll();
     $statement->closeCursor();
     return $technicians;
-}
+};
 
 function deleteTech($techID) {
     global $db;
@@ -17,7 +16,7 @@ function deleteTech($techID) {
     $statement->bindValue(':techID', $techID);
     $statement->execute();
     $statement->closeCursor();
-}
+};
 
 function addTech($fName, $lName, $email, $phone, $pass) {
     global $db;
@@ -31,7 +30,5 @@ function addTech($fName, $lName, $email, $phone, $pass) {
     $statement->bindValue(':pass', $pass);
     $statement->execute();
     $statement->closeCursor();
-}
-
-
+};
 ?>

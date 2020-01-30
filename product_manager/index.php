@@ -8,73 +8,55 @@ if($action === NULL) {
     if($action === NULL) {
         $action = 'list_products';
     }
-}
+};
 
 if($action === 'list_products') {
     $products = getProducts();
     include './product_list.php';
-}
+};
 
 if($action === 'delete') {
     $code = filter_input(INPUT_POST, 'code');
     deleteProducts($code);
-    // header reloads the page where include just adds to file
     header("Location: .");
-}
+};
 
 if($action === 'showAdd') {
     header("Location: product_add.php");
-}
+};
 
 if($action === 'add') {
     $errors = [];
-    $c = filter_input(INPUT_POST, 'code');
-    $n = filter_input(INPUT_POST, 'name');
-    $v = filter_input(INPUT_POST, 'version');
-    $d = filter_input(INPUT_POST, 'date');
+    $code = filter_input(INPUT_POST, 'code');
+    $name = filter_input(INPUT_POST, 'name');
+    $version = filter_input(INPUT_POST, 'version');
+    $date = filter_input(INPUT_POST, 'date');
 
-    if(empty($c)) {
+    if(empty($code)) {
         array_push($errors, '**Code field is empty**');
-    } else {
-        if((strlen($c)) <= 10) {
-            $code = $c;
-        } else {
-            array_push($errors, '**Code exceeds 10 chars**');
-        };   
+    } elseif((strlen($code)) > 10) {
+        array_push($errors, '**Code exceeds 10 chars**');
     };
 
-    if(empty($n)) {
+    if(empty($name)) {
         array_push($errors, '**Name field is empty**');
-    } else {
-        if((strlen($n)) <= 50) {
-            $name = $n;
-        } else {
-            array_push($errors, '**Name exceeds 50 chars**');
-        };
+    } elseif((strlen($name)) > 50) {
+        array_push($errors, '**Name exceeds 50 chars**');
     };
 
-    // Need to fix the ability to be able to add in periods for decimals
-    if(empty($v)) {
+    if(empty($version)) {
         array_push($errors, '**Version field is empty**');
-    } else {
-        if(is_numeric(filter_input(INPUT_POST, 'version'))) {
-            $version = $v;
-        } else {
-            array_push($errors, '**Version must be numerical**');
-        };
+    } elseif(!is_numeric(filter_input(INPUT_POST, 'version'))) {
+        array_push($errors, '**Version must be numerical**');
     };
 
-    if(empty($d)) {
-         array_push($errors, '**Release Date field is empty**');
-    } else {
-        if(preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", filter_input(INPUT_POST, 'date'))) {
-            $date = filter_input(INPUT_POST, 'date');
-        } else {
-            array_push($errors, '**Invalid date format**');
-        }; 
+    if(empty($date)) {
+        array_push($errors, '**Release Date field is empty**');
+    } elseif(!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date)) {
+        array_push($errors, '**Invalid date format**');
     };
 
-    if(!empty($code) && !empty($name) && !empty($version) && !empty($date)) {
+    if(empty($errors)) {
         addProduct($code, $name, $version, $date);
         header("Location: .");
     } else {
@@ -83,5 +65,4 @@ if($action === 'add') {
         header("Location: product_add.php?error");
     };
 };
-
 ?>

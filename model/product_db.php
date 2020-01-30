@@ -1,5 +1,4 @@
 <?php 
-
 function getProducts() {
     global $db; 
     $query = 'SELECT * FROM products';
@@ -7,7 +6,7 @@ function getProducts() {
     $statement->execute();
     $products = $statement->fetchAll();
     return $products;
-}
+};
 
 function getProductCode($productName) {
     global $db;
@@ -17,7 +16,7 @@ function getProductCode($productName) {
     $statement->execute();
     $code = $statement->fetchColumn();
     return $code;
-}
+};
 
 function getProductName($code) {
     global $db;
@@ -27,7 +26,7 @@ function getProductName($code) {
     $statement->execute();
     $name = $statement->fetchColumn();
     return $name;
-}
+};
 
 function deleteProducts($code) {
     global $db; 
@@ -37,7 +36,7 @@ function deleteProducts($code) {
     $statement->bindValue(':productCode', $code);
     $statement->execute();
     $statement->closeCursor();
-}
+};
 
 function addProduct($code, $name, $version, $date) {
     global $db;
@@ -51,6 +50,5 @@ function addProduct($code, $name, $version, $date) {
     $statement->bindValue(':releaseDate', $date);
     $statement->execute();
     $statement->closeCursor();
-}
-
+};
 ?>

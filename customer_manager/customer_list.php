@@ -3,7 +3,6 @@ include '../view/header.php';
 require('../model/database.php');
 require('../model/customer_db.php');
 ?>
-
 <div id="main">
 <h1>Customer Search</h1>
 <form action="." method="post">
@@ -11,13 +10,11 @@ require('../model/customer_db.php');
     <input type="text" name="search">
     <input type="submit" name="submitBtn" value="Search">
 </form>
-
 <?php if(filter_has_var(INPUT_GET, 'search')) : ?>
-
-<?php 
-$search = filter_input(INPUT_GET, 'search');
-$results = getSearchResults($search);
-?>
+    <?php 
+    $search = filter_input(INPUT_GET, 'search');
+    $results = getSearchResults($search);
+    ?>
     <h1>Results</h1>
     <table>
         <tr>
@@ -40,6 +37,5 @@ $results = getSearchResults($search);
         <?php endforeach; ?>
     </table>
 <?php endif; ?>
-
 </div>
 <?php include '../view/footer.php' ?>

@@ -11,7 +11,7 @@ if(empty($action)) {
     $action = filter_input(INPUT_GET, 'action');
     if(empty($action)) {
         $action = 'getCustomer';
-    }
+    };
 };
 
 if($action === 'getCustomer') {
@@ -38,18 +38,42 @@ if($action === 'createIncident') {
             $registered = getRegisteredProducts($custID);
             include 'create_incident.php';
         }
-    }
+    };
 };
 
-// Needs Error handling / validation of input
 if($action === 'complete') {
     $errors = [];
     $custID = filter_input(INPUT_POST, 'custID');
     $code = filter_input(INPUT_POST, 'code');
     $title = filter_input(INPUT_POST, 'title');
     $description = filter_input(INPUT_POST, 'description');
-    createNewIncident($custID, $code, $title, $description);
-    header("Location: success.php");
-};
 
+    if(empty($code)) {
+        array_push($errors, '**You must register you product to file an incident**');
+    };
+
+    if(empty($title)) {
+        array_push($errors, '**Title field cannot be empty**');
+    } elseif((strlen($title)) > 50) {
+        array_push($errors, '**Title field cannot exceed 50 chars**');
+    };
+
+    if(empty($description)) {
+        array_push($errors, '**Description field cannot be empty**');
+    } elseif((strlen($description)) > 2000) {
+        array_push($errors, '**Description field cannot exceed 2000 chars**');
+    };
+
+    if(empty($errors)) {
+        createNewIncident($custID, $code, $title, $description);
+        header("Location: success.php");
+    } else {
+        session_start();
+        $_SESSION['errors'] = $errors;
+        $_SESSION['custID'] = $custID;
+        $_SESSION['customer'] = getCustomer($custID);
+        $_SESSION['registered'] = getRegisteredProducts($custID);
+        header("Location: create_incident.php?errors");
+    };
+};
 ?>

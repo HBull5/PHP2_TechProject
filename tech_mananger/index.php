@@ -27,63 +27,43 @@ if($action === 'showAdd') {
 
 if($action === 'add') {
     $errors = [];
-    $f = filter_input(INPUT_POST, 'fName');
-    $l = filter_input(INPUT_POST, 'lName');
-    $e = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $ph = filter_input(INPUT_POST, 'phone');
-    $pass = filter_input(INPUT_POST, 'password');
+    $fName = filter_input(INPUT_POST, 'fName');
+    $lName = filter_input(INPUT_POST, 'lName');
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $phone = filter_input(INPUT_POST, 'phone');
+    $password = filter_input(INPUT_POST, 'password');
 
-    if(empty($f)) {
+    if(empty($fName)) {
         array_push($errors, '**First Name field is empty**');
-    } else {
-        if(strlen($f) <= 50) {
-            $fName = $f; 
-        } else {
-            array_push($errors, '**First Name exceeds 50 chars**');
-        };
+    } elseif(strlen($fName) > 50) {
+        array_push($errors, '**First Name exceeds 50 chars**');
     };
 
-    if(empty($l)) {
+    if(empty($lName)) {
         array_push($errors, '**Last Name field is empty**');
-    } else {
-        if(strlen($l) <= 50) {
-            $lName = $l;
-        } else {
-            array_push($errors, '**Last Name exceeds 50 chars**');
-        };
+    } elseif(strlen($lName) > 50) {
+        array_push($errors, '**Last Name exceeds 50 chars**');
     };
 
-    if(empty($e)) {
+    if(empty($email)) {
         array_push($errors, '**Email field is empty**');
-    } else {
-        if(filter_var($e, FILTER_VALIDATE_EMAIL)) {
-            $email = $e;
-        } else {
-            array_push($errors, '**Invalid Email**');
-        };
+    } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        array_push($errors, '**Invalid Email**');
     };
 
-    if(empty($ph)) {
+    if(empty($phone)) {
         array_push($errors, '**Phone field is empty**');
-    } else {
-        if(preg_match("/^[2-9]\d{2}-\d{3}-\d{4}$/", $ph)) {
-            $phone = $ph;
-        } else {
-            array_push($errors, '**Phone must be XXX-XXX-XXXX**');
-        };
+    } elseif(!preg_match("/^[1-9]\d{2}-\d{3}-\d{4}$/", $phone)) {
+        array_push($errors, '**Phone must be XXX-XXX-XXXX**');
     };
 
-    if(empty($pass)) {
+    if(empty($password)) {
         array_push($errors, '**Password field is empty**');
-    } else {
-        if(strlen($pass) <= 20) {
-            $password = $pass;
-        } else {
-            array_push($errors, '**Password field exceeds 20 chars**');
-        };
+    } elseif(strlen($password) > 20) {
+        array_push($errors, '**Password field exceeds 20 chars**');
     };
 
-    if(!empty($fName) && !empty($lName) && !empty($email) && !empty($phone) && !empty($password)) {
+    if(empty($errors)) {
         addTech($fName, $lName, $email, $phone, $password);
         header("Location: .");
     } else {
@@ -92,5 +72,4 @@ if($action === 'add') {
         header("Location: technician_add.php?error");
     };
 };
-
 ?>

@@ -1,5 +1,4 @@
 <?php
-
 function getSearchResults($search) {
     global $db;
     $query = "SELECT * FROM customers WHERE lastName LIKE CONCAT('%', :search, '%')";
@@ -50,5 +49,4 @@ function updateCustomer($custID, $fName, $lName, $address, $city, $state, $zip, 
     $statement->execute();
     $statement->closeCursor();
 };
-
 ?>
