@@ -8,13 +8,20 @@
               href="../main.css"/>
     <link rel="stylesheet" href="main.css">
     </head>
-
+<?php 
+    $dir = getcwd();
+    if($dir === '/opt/lampp/htdocs/PHP/PHP2/PHP2_TechProject') {
+        $cd = '.';
+    } else {
+        $cd = '..';
+    };
+?>
     <!-- the body section -->
     <body>
     <div id="page">
         <div id="header">
             <h1>SportsPro Technical Support</h1>
             <p>Sports management software for the sports enthusiast</p>
-            <ul class="nav"><li><a href="..">Home</a></li></ul>
+            <ul class="nav"><li><a href="<?php echo $cd; ?>">HOME</a></li></ul>
         </div>
        
