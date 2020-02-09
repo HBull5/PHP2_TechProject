@@ -5,6 +5,7 @@ function getProducts() {
     $statement = $db->prepare($query);
     $statement->execute();
     $products = $statement->fetchAll();
+    $statement->closeCursor();
     return $products;
 };
 
@@ -15,6 +16,7 @@ function getProductCode($productName) {
     $statement->bindValue(':name', $productName);
     $statement->execute();
     $code = $statement->fetchColumn();
+    $statement->closeCursor();
     return $code;
 };
 
@@ -25,6 +27,7 @@ function getProductName($code) {
     $statement->bindValue(':productCode', $code);
     $statement->execute();
     $name = $statement->fetchColumn();
+    $statement->closeCursor();
     return $name;
 };
 

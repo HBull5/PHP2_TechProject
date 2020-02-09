@@ -16,6 +16,7 @@ function getRegisteredProducts($custID) {
     $statement->bindValue(':customerID', $custID);
     $statement->execute();
     $registered = $statement->fetchAll(PDO::FETCH_COLUMN);
+    $statement->closeCursor();
     return $registered;
 };
 
@@ -33,6 +34,7 @@ function getUnregisteredProducts(array $registeredProducts) {
     $statement = $db->prepare($query);
     $statement->execute();
     $unregistered = $statement->fetchAll(PDO::FETCH_COLUMN);
+    $statement->closeCursor();
     return $unregistered;
 };
 ?>

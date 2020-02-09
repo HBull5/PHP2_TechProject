@@ -28,6 +28,7 @@ function getCustomerID($email) {
     $statement->bindValue(':email', $email);
     $statement->execute();
     $custID = $statement->fetchColumn();
+    $statement->closeCursor();
     return $custID;
 }
 

@@ -1,6 +1,7 @@
 <?php
 require('../model/database.php');
 require('../model/customer_db.php');
+require('../model/countries_db.php');
 
 $action = filter_input(INPUT_POST, 'action');
 
@@ -20,8 +21,10 @@ if($action === 'listCustomers') {
 if($action === 'updateCustomers') {
     $custID = filter_input(INPUT_POST, 'custID');
     $customer = getCustomer($custID);
+    $countries = getAllCountryNames();
     session_start();
     $_SESSION['customer'] = $customer;
+    $_SESSION['countries'] = $countries;
     header("Location: customer_update.php");
 };
 

@@ -1,7 +1,10 @@
-<?php include '../view/header.php'; ?>
 <?php 
+    require('../model/database.php');
+    require('../model/countries_db.php');
+    include '../view/header.php';
     session_start();
     $customer = $_SESSION['customer'];
+    $countries = $_SESSION['countries'];
 ?>
 <div id="main">
     <h1>View/Update Customer</h1>
@@ -35,7 +38,15 @@
         <input type="text" name="zip" value="<?php echo $customer['postalCode'] ?>">
         <br>
         <label>Country Code: </label>
-        <input type="text" name="country" value="<?php echo $customer['countryCode'] ?>">
+        <select name="country">
+        <?php foreach($countries as $country) : ?>
+        <?php if(getCountryCode($country) == $customer['countryCode']) : ?>
+            <option selected value="<?php echo getCountryCode($country) ?>"><?php echo $country ?></option>
+        <?php else : ?>
+            <option value="<?php echo getCountryCode($country) ?>"><?php echo $country ?></option>
+        <?php endif; ?>
+        <?php endforeach; ?>
+        </select>
         <br>
         <label>Phone: </label>
         <input type="text" name="phone" value="<?php echo $customer['phone'] ?>">
@@ -52,4 +63,5 @@
     </form>
     <p><a href=".">Search Customers</a></p>
 </div>
+<script src="app.js"></script>
 <?php include '../view/footer.php'; ?>
