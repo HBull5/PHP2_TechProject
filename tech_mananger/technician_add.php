@@ -23,6 +23,7 @@
     <br>
     <label>Phone: </label>
     <input type="text" name="phone">
+    <span>Use 'XXX-XXX-XXXX' format</span>
     <br>
     <label>Password: </label>
     <input type="text" name="password">

@@ -50,6 +50,7 @@
         <br>
         <label>Phone: </label>
         <input type="text" name="phone" value="<?php echo $customer['phone'] ?>">
+        <span>Use '(XXX)XXX-XXXX' format</span>
         <br>
         <label>Email: </label>
         <input type="text" name="email" value="<?php echo $customer['email'] ?>">

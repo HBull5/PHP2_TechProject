@@ -17,7 +17,7 @@ if(filter_has_var(INPUT_GET, 'errors')) {
     <input type="hidden" name="action" value="createIncident">
     <label>Email: </label>
     <input type="text" name="email">
-    <input type="submit" value="GetCustomer">
+    <input type="submit">
 </form>
 </div>
 <?php include '../view/footer.php' ?>
