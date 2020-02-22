@@ -23,8 +23,7 @@
             <h1>SportsPro Technical Support</h1>
             <p>Sports management software for the sports enthusiast</p>
             <ul class="nav flex row">
-                <li><a href="<?php echo $cd; ?>">HOME</a></li>
-                <li><a href="..">back</a></li>
+                <li><a href="<?php echo $cd; ?>">Home</a></li>
             </ul>
         </div>
        
