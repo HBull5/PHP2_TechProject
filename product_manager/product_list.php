@@ -14,7 +14,7 @@
                 <td><?php echo $product['productCode'] ?></td>
                 <td><?php echo $product['name'] ?></td>
                 <td><?php echo $product['version'] ?></td>
-                <td><?php echo $product['releaseDate'] ?></td>
+                <td><?php echo date_format(date_create($product['releaseDate']), 'n-j-Y') ?></td>
                 <td><form action="." method="post">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="code" value="<?php echo $product['productCode'] ?>">

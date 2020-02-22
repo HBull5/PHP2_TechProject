@@ -40,8 +40,11 @@ switch($action) {
         };
         if(empty($date)) {
             array_push($errors, '**Release Date field is empty**');
-        } elseif(!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $date)) {
-            array_push($errors, '**Invalid date format**');
+        } else {
+            $date = date_parse($date);
+            if(empty($date['year']) || empty($date['month']) || empty($date['day'])) {
+                array_push($errors, '**Invalid Date**');
+            }
         };
         if(empty($errors)) {
             addProduct($code, $name, $version, $date);
