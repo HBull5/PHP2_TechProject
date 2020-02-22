@@ -1,8 +1,10 @@
 <?php 
-require('../model/database.php');
-require('../model/technician_db.php');
+require('../model/database__oo.php');
+require('../model/technician_db_oo.php');
+require('technician.php');
 
 $action = filter_input(INPUT_POST, 'action');
+$techDB = new TechnicianDB();
 
 if(empty($action)) {
     $action = filter_input(INPUT_GET, 'action');
@@ -10,9 +12,9 @@ if(empty($action)) {
 
 switch($action) {
     case 'delete':
-        $techID = filter_input(INPUT_POST, 'techID');
-        deleteTech($techID);
-        header('Location: .');
+        $techID = filter_input(INPUT_POST, 'technician');
+        $techDB->deleteTech($techID);
+        header("Location: .");
         break;
     case 'showAdd':
         header("Location: technician_add.php");
@@ -50,7 +52,7 @@ switch($action) {
             array_push($errors, '**Password field exceeds 20 chars**');
         };
         if(empty($errors)) {
-            addTech($fName, $lName, $email, $phone, $password);
+            $techDB->addTech($fName, $lName, $email, $phone, $password);
             header("Location: .");
         } else {
             session_start();
@@ -59,7 +61,7 @@ switch($action) {
         };
         break;
     default:
-        $techs = getTechs();
+        $techs = $techDB->getTechs();
         include 'technician_list.php';
         break;
 };

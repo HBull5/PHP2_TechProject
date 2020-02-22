@@ -1,4 +1,5 @@
 <?php
+    // Need to deprecate this
     $dsn = 'mysql:host=localhost;dbname=tech_support';
     $username = 'root';
     $password = '';

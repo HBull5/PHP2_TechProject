@@ -3,8 +3,7 @@
 <h1>Technician List</h1>
 <table>
     <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
+        <th>Name</th>
         <th>Email</th>
         <th>Phone</th>
         <th>Password</th>
@@ -12,14 +11,22 @@
     </tr>
     <?php foreach($techs as $tech) : ?>
     <tr>
-        <td><?php echo $tech['firstName']; ?></td>
-        <td><?php echo $tech['lastName']; ?></td>
-        <td><?php echo $tech['email']; ?></td>
-        <td><?php echo $tech['phone']; ?></td>
-        <td><?php echo $tech['password']; ?></td>
+        <?php 
+        $techID = $tech['techID'];
+        $fName = $tech['firstName'];
+        $lName = $tech['lastName'];
+        $email = $tech['email'];
+        $phone = $tech['phone'];
+        $pass = $tech['password'];
+        $technician = new Technician($techID, $fName, $lName, $email, $phone, $pass);
+        ?>
+        <td><?php echo $technician->getFullName(); ?></td>
+        <td><?php echo $technician->getEmail(); ?></td>
+        <td><?php echo $technician->getPhone(); ?></td>
+        <td><?php echo $technician->getPassword(); ?></td>
         <td><form action="." method="post">
             <input type="hidden" name="action" value="delete">
-            <input type="hidden" name="techID" value="<?php echo $tech['techID']; ?>">
+            <input type="hidden" name="technician" value="<?php echo $technician->getTechID(); ?>">
             <input type="submit" value="delete">
         </form></td>
     </tr>
