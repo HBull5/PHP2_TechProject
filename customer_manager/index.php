@@ -30,64 +30,62 @@ switch($action) {
         $password = filter_input(INPUT_POST, 'pass');
 
         if(empty($fName)) {
-            array_push($errors, '**First Name field is empty**');
+            $errors['fName'] = 'Required';
         } elseif((strlen($fName)) > 50) {
-            array_push($errors, '**First Name exceeds 50 chars**');
+            $errors['fName'] = 'Too long';
         };
 
         if(empty($lName)) {
-            array_push($errors, '**Last Name field is empty**');
+            $errors['lName'] = 'Required';
         } elseif((strlen($lName)) > 50) {
-            array_push($errors, '**Last Name exceeds 50 chars**');
+            $errors['lName'] = 'Too long';
         };
 
         if(empty($address)) {
-            array_push($errors, '**Address Name field is empty**');
+            $errors['address'] = 'Required';
         } elseif((strlen($address)) > 50) {
-            array_push($errors, '**Address exceeds 50 chars**');
+            $errors['address'] = 'Too long';
         };
 
         if(empty($city)) {
-            array_push($errors, '**City field is empty**');
+            $errors['city'] = 'Required';
         } elseif((strlen($city)) > 50) {
-            array_push($errors, '**City exceeds 50 chars**');
+            $errors['city'] = 'Too long';
         };
 
         if(empty($state)) {
-            array_push($errors, '**State field is empty**');
+            $errors['state'] = 'Required';
         } elseif((strlen($state)) > 2) {
-            array_push($errors, '**State exceeds 2 chars**');
+            $errors['state'] = 'Too long';
         };
 
         if(empty($postalCode)) {
-            array_push($errors, '**Postal Code field is empty**');
+            $errors['postalCode'] = 'Required';
         } elseif((strlen($postalCode)) > 20) {
-            array_push($errors, '**Postal Code exceeds 20 chars**');
-        };
-
-        if(empty($countryCode)) {
-            array_push($errors, '**Country Code field is empty**');
-        } elseif((strlen($countryCode)) > 2) {
-            array_push($errors, '**Country Code exceeds 2 chars**');
+            $errors['postalCode'] = 'Too long';
         };
 
         if(empty($phone)) {
-            array_push($errors, '**Phone field is empty**');
-        } elseif(!preg_match("/((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/", $phone)) {
-            array_push($errors, '**Phone must be (XXX) XXX-XXXX**');
+            $errors['phone'] = 'Required';
+        } elseif(!preg_match("/^([\(]{1}[0-9]{3}[\)]{1}[ ]{1}[0-9]{3}[\-]{1}[0-9]{4})$/", $phone)) {
+            $errors['phone'] = 'Use (999) 999-9999 format';
         };
 
         if(empty($email)) {
-            array_push($errors, '**Email field is empty**');
+            $errors['email'] = 'Required';
         } elseif((strlen($email)) > 50) {
-            array_push($errors, '**Email exceeds 50 chars**');
-        };
+            $errors['email'] = 'Too long';
+        } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Invalid email';
+        } 
 
         if(empty($password)) {
-            array_push($errors, '**Password field is empty**');
+            $errors['password'] = 'Required';
         } elseif((strlen($password)) > 20) {
-            array_push($errors, '**Password exceeds 20 chars**');
-        };
+            $errors['password'] = 'Too long';
+        } elseif(strlen($password) < 6) {
+            $errors['password'] = 'Too short';
+        }
 
         if(empty($errors)) {
             updateCustomer($custID, $fName, $lName, $address, $city, $state, $postalCode, $countryCode, $phone, $email, $password);
