@@ -44,6 +44,8 @@ switch($action) {
             $date = date_parse($date);
             if(empty($date['year']) || empty($date['month']) || empty($date['day'])) {
                 array_push($errors, '**Invalid Date**');
+            } else {
+                $date = $date['year'] . '/' . $date['month'] .  '/' . $date['day'];
             }
         };
         if(empty($errors)) {
