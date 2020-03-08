@@ -28,6 +28,7 @@ switch($action) {
         $phone = filter_input(INPUT_POST, 'phone');
         $email = filter_input(INPUT_POST, 'email');
         $password = filter_input(INPUT_POST, 'pass');
+        $values = [$fName, $lName, $address, $city, $state, $postalCode, $countryCode, $phone, $email, $password];
 
         if(empty($fName)) {
             $errors['fName'] = 'Required';
@@ -93,6 +94,7 @@ switch($action) {
         } else {
             session_start();
             $_SESSION['errors'] = $errors;
+            $_SESSION['values'] = $values;
             header("Location: customer_update.php?error");
         };
         break; 

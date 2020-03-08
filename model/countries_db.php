@@ -21,4 +21,15 @@ function getCountryCode($countryName) {
     return $countryCode;
 }
 
+function getCountryName($countryCode) {
+    global $db;
+    $query = 'SELECT countryName FROM countries WHERE countryCode = :countryCode';
+    $statement = $db->prepare($query);
+    $statement->bindValue(':countryCode', $countryCode);
+    $statement->execute();
+    $countryName = $statement->fetchColumn();
+    $statement->closeCursor();
+    return $countryName;
+}
+
 ?>

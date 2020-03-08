@@ -26,6 +26,7 @@ switch($action) {
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $phone = filter_input(INPUT_POST, 'phone');
         $password = filter_input(INPUT_POST, 'password');
+        $values = [$fName, $lName, $email, $phone, $password];
         if(empty($fName)) {
             array_push($errors, '**First Name field is empty**');
         } elseif(strlen($fName) > 50) {
@@ -57,6 +58,7 @@ switch($action) {
         } else {
             session_start();
             $_SESSION['errors'] = $errors;
+            $_SESSION['values'] = $values;
             header("Location: technician_add.php?error");
         };
         break;
