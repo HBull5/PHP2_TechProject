@@ -6,33 +6,45 @@ require('../model/registrations_db.php');
 
 $action = filter_input(INPUT_POST, 'action');
 session_start();
-if(isset($_SESSION['custID'])) {
-    if($action != 'logout') {
-        include 'product_registration.php';
-        exit();
-    }
+
+if(empty($action)) {
+    $action = 'login';
 }
 
 switch($action) {
+    case 'login':
+        if(isset($_SESSION['custID'])) {
+            if($action != 'logout') {
+                $registeredProducts = getRegisteredProducts($_SESSION['custID']);
+                $_SESSION['unregisteredProducts'] = getUnregisteredProducts($registeredProducts);
+                header("Location: product_registration.php");
+            }
+        } else {
+            header("Location: registration_login.php");
+        }
+        break;
     case 'register':
         $errors = [];
         $email = filter_input(INPUT_POST, 'email');
+        $values = [$email];
         if(empty($email)) {
             array_push($errors, '**Email field cannot be empty**');
             $_SESSION['errors'] = $errors;
+            $_SESSION['values'] = $values;
             header("Location: registration_login.php?error");
         } else {
             $custID = getCustomerID($email);
             if(empty($custID)) {
                 array_push($errors, '**Invalid Email Try Again**');
                 $_SESSION['errors'] = $errors;
+                $_SESSION['values'] = $values;
                 header("Location: registration_login.php?error");
             } else { 
                 $_SESSION['custID'] = $custID;
                 $_SESSION['customer'] = getCustomer($custID);
                 $registeredProducts = getRegisteredProducts($custID);
                 $_SESSION['unregisteredProducts'] = getUnregisteredProducts($registeredProducts);
-                include 'product_registration.php';
+                header("Location: product_registration.php");
             }
         }
         break;
@@ -43,14 +55,12 @@ switch($action) {
         header("Location: registration_login.php");
         break;
     case 'complete':
+        echo 'this should happen!';
         $custID = filter_input(INPUT_POST, 'custID');
         $productName = filter_input(INPUT_POST, 'productName');
         $code = getProductCode($productName);
         registerProduct($custID, $code);
         header("Location: success.php?code=".$code);
-        break;
-    default:
-        header("Location: registration_login.php");
-        break;
+    break;
 };
 ?>

@@ -8,9 +8,11 @@ require('../model/incidents_db.php');
 $action = filter_input(INPUT_POST, 'action');
 
 switch($action) {
+    // This also is going to need some user input retintion
     case 'createIncident':
         $errors = [];
         $email = filter_input(INPUT_POST, 'email');
+        $values = [$email];
         if(empty($email)) {
             array_push($errors, '**Email field cannot be empty**');
             session_start();
@@ -22,6 +24,7 @@ switch($action) {
                 array_push($errors, '**Email is invalid. Please Try again!**');
                 session_start();
                 $_SESSION['errors'] = $errors;
+                $_SESSION['values'] = $values;
                 header("Location: get_customer.php?errors");
             } else {
                 $customer = getCustomer($custID);
@@ -36,6 +39,7 @@ switch($action) {
         $code = filter_input(INPUT_POST, 'code');
         $title = filter_input(INPUT_POST, 'title');
         $description = filter_input(INPUT_POST, 'description');
+        $values = [$title];
 
         if(empty($code)) {
             array_push($errors, '**You must register you product to file an incident**');
@@ -62,6 +66,7 @@ switch($action) {
             $_SESSION['custID'] = $custID;
             $_SESSION['customer'] = getCustomer($custID);
             $_SESSION['registered'] = getRegisteredProducts($custID);
+            $_SESSION['values'] = $values;
             header("Location: create_incident.php?errors");
         };
         break;

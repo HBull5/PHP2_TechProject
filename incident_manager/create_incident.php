@@ -3,6 +3,7 @@
 <h1>Create Incident</h1>
 <div class="error">
 <?php 
+    $error = false;
     if(filter_has_var(INPUT_GET, 'errors')) {
         require('../model/database.php');
         require('../model/product_db.php');
@@ -11,9 +12,11 @@
         $custID = $_SESSION['custID'];
         $customer = $_SESSION['customer'];
         $registered = $_SESSION['registered'];
+        $values = $_SESSION['values'];
         foreach($errors as $error) {
             echo $error . "<br>";
         }
+        $error = true;
     };
 ?>
 </div>
@@ -32,7 +35,7 @@
     </select>
     <br>
     <label>Title:</label>
-    <input type="text" name="title">
+    <input type="text" name="title" value="<?php echo ($error) ? $values[0] : "" ?>">
     <br>
     <label>Description:</label>
     <textarea name="description" cols="30" rows="10"></textarea>

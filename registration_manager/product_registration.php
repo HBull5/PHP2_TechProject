@@ -1,5 +1,6 @@
 <?php 
 include '../view/header.php';
+session_start();
 $custID = $_SESSION['custID'];
 $customer = $_SESSION['customer'];
 $unregisteredProducts = $_SESSION['unregisteredProducts'];
