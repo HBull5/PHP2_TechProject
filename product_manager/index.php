@@ -23,6 +23,7 @@ switch($action) {
         $name = filter_input(INPUT_POST, 'name');
         $version = filter_input(INPUT_POST, 'version');
         $date = filter_input(INPUT_POST, 'date');
+        $values = [$code, $name, $version, $date];
         if(empty($code)) {
             array_push($errors, '**Code field is empty**');
         } elseif((strlen($code)) > 10) {
@@ -39,21 +40,28 @@ switch($action) {
             array_push($errors, '**Version must be numerical**');
         };
         if(empty($date)) {
-            array_push($errors, '**Release Date field is empty**');
+            array_push($errors, '**Release Date field is empty**');  
         } else {
-            $date = date_parse($date);
-            if(empty($date['year']) || empty($date['month']) || empty($date['day'])) {
+            $dateArray = date_parse($date);
+            if(empty($dateArray['year']) || empty($dateArray['month']) || empty($dateArray['day'])) {
                 array_push($errors, '**Invalid Date**');
             } else {
-                $date = $date['year'] . '/' . $date['month'] .  '/' . $date['day'];
+                $date = explode("-", $date);
+                if(strlen($date[0]) < 4) {
+                    $date = $dateArray['year'].'-'.$dateArray['day'].'-'.$dateArray['month'];
+                } else {
+                    $date = $dateArray['year'].'-'.$dateArray['month'].'-'.$dateArray['day'];
+                }
             }
         };
+
         if(empty($errors)) {
             addProduct($code, $name, $version, $date);
             header("Location: .");
         } else {
             session_start();
             $_SESSION['errors'] = $errors;
+            $_SESSION['values'] = $values;
             header("Location: product_add.php?error");
         };
         break;

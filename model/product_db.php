@@ -45,7 +45,7 @@ function addProduct($code, $name, $version, $date) {
     global $db;
     $query = 'INSERT INTO products
               (productCode, name, version, releaseDate)
-              VALUES(:code, :name, :version, :releaseDate)';
+              VALUES(:code, :name, :version, DATE_FORMAT(:releaseDate, "%Y-%m-%d"))';
     $statement = $db->prepare($query);
     $statement->bindValue(':code', $code);
     $statement->bindValue(':name', $name);
