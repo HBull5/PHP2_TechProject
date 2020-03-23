@@ -1,8 +1,6 @@
 <?php 
 include '../view/header.php';
-// require('../model/database.php');
 require('../model/database__oo.php');
-// require('../model/customer_db.php');
 require('../model/customer_db_oo.php');
 $customerDB = new CustomerDB();
 ?>

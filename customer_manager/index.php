@@ -1,7 +1,5 @@
 <?php
-// require('../model/database.php');
 require('../model/database__oo.php');
-// require('../model/customer_db.php');
 require('../model/customer_db_oo.php');
 require('../model/countries_db_oo.php');
 

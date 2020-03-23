@@ -7,7 +7,7 @@ class IncidentsDB {
         $this->db = $connection->getDB();
     }
 
-    public function createNewIncident() {
+    public function createNewIncident($custID, $code, $title, $description) {
         try {
             $query = 'INSERT INTO incidents (customerID, productCode, dateOpened, title, description) VALUES(:customerID, :productCode, NOW(), :title, :description)';
             $statement = $this->db->prepare($query);

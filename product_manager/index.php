@@ -1,6 +1,4 @@
 <?php
-// require('../model/database.php');
-// require('../model/product_db.php');
 require('../model/database__oo.php');
 require('../model/product_db_oo.php');
 

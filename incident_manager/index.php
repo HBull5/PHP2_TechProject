@@ -1,13 +1,8 @@
 <?php 
-// require('../model/database.php');
 require('../model/database__oo.php');
-// require('../model/customer_db.php');
 require('../model/customer_db_oo.php');
-// require('../model/registrations_db.php');
 require('../model/registrations_db_oo.php');
-// require('../model/product_db.php');
 require('../model/product_db_oo.php');
-// require('../model/incidents_db.php');
 require('../model/incidents_db_oo.php');
 
 $action = filter_input(INPUT_POST, 'action');
@@ -17,7 +12,6 @@ $registrationDB = new RegistrationsDB();
 $incidentDB = new IncidentsDB();
 
 switch($action) {
-    // This also is going to need some user input retintion
     case 'createIncident':
         $errors = [];
         $email = filter_input(INPUT_POST, 'email');
@@ -49,6 +43,9 @@ switch($action) {
         $title = filter_input(INPUT_POST, 'title');
         $description = filter_input(INPUT_POST, 'description');
         $values = [$title];
+
+        // TESTING
+        echo $custID.' '.$code.' '.$title.' '.$description;
 
         if(empty($code)) {
             array_push($errors, '**You must register you product to file an incident**');

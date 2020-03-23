@@ -1,12 +1,11 @@
 <?php 
-    // require('../model/database.php');
-    require('../model/database__oo.php');
-    require('../model/countries_db_oo.php');
-    include '../view/header.php';
-    $countriesDB = new CountryDB();
-    session_start();
-    $customer = $_SESSION['customer'];
-    $countries = $_SESSION['countries'];
+require('../model/database__oo.php');
+require('../model/countries_db_oo.php');
+include '../view/header.php';
+$countriesDB = new CountryDB();
+session_start();
+$customer = $_SESSION['customer'];
+$countries = $_SESSION['countries'];
 ?>
 <div id="main">
     <h1>View/Update Customer</h1>

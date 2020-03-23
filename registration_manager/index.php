@@ -1,11 +1,7 @@
 <?php 
-// require('../model/database.php');
 require('../model/database__oo.php');
-// require('../model/product_db.php');
 require('../model/product_db_oo.php');
-// require('../model/customer_db.php');
 require('../model/customer_db_oo.php');
-// require('../model/registrations_db.php');
 require('../model/registrations_db_oo.php');
 
 $action = filter_input(INPUT_POST, 'action');
@@ -62,11 +58,10 @@ switch($action) {
         header("Location: registration_login.php");
         break;
     case 'complete':
-        echo 'this should happen!';
         $custID = filter_input(INPUT_POST, 'custID');
         $productName = filter_input(INPUT_POST, 'productName');
         $code = $productDB->getProductCode($productName);
-        $registrationDB->registerProduct($custID, $code);
+        $registrationsDB->registerProduct($custID, $code);
         header("Location: success.php?code=".$code);
     break;
 };

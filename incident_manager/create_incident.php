@@ -7,7 +7,6 @@
     if(filter_has_var(INPUT_GET, 'errors')) {
         require('../model/database.php');
         require('../model/database__oo.php');
-        // require('../model/product_db.php');
         require('../model/product_db_oo.php');
         $productDB = new ProductDB();
         session_start();
@@ -26,7 +25,7 @@
 <form action="." method="post" id="aligned">
     <input type="hidden" name="action" value="complete">
     <input type="hidden" name="custID" value="<?php echo $custID; ?>">
-    
+
     <label>Customer:</label>
     <label><?php echo $customer['firstName'] . " " . $customer['lastName'] ?></label>
     <br>
