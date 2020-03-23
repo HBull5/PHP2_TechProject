@@ -1,11 +1,20 @@
 <?php 
-require('../model/database.php');
-require('../model/customer_db.php');
-require('../model/registrations_db.php');
-require('../model/product_db.php');
-require('../model/incidents_db.php');
+// require('../model/database.php');
+require('../model/database__oo.php');
+// require('../model/customer_db.php');
+require('../model/customer_db_oo.php');
+// require('../model/registrations_db.php');
+require('../model/registrations_db_oo.php');
+// require('../model/product_db.php');
+require('../model/product_db_oo.php');
+// require('../model/incidents_db.php');
+require('../model/incidents_db_oo.php');
 
 $action = filter_input(INPUT_POST, 'action');
+$customerDB = new CustomerDB();
+$productDB = new ProductDB();
+$registrationDB = new RegistrationsDB();
+$incidentDB = new IncidentsDB();
 
 switch($action) {
     // This also is going to need some user input retintion
@@ -19,7 +28,7 @@ switch($action) {
             $_SESSION['errors'] = $errors;
             header("Location: get_customer.php?errors");
         } else {
-            $custID = getCustomerID($email);
+            $custID = $customerDB->getCustomerID($email);
             if(empty($custID)) {
                 array_push($errors, '**Email is invalid. Please Try again!**');
                 session_start();
@@ -27,8 +36,8 @@ switch($action) {
                 $_SESSION['values'] = $values;
                 header("Location: get_customer.php?errors");
             } else {
-                $customer = getCustomer($custID);
-                $registered = getRegisteredProducts($custID);
+                $customer = $customerDB->getCustomer($custID);
+                $registered = $registrationDB->getRegisteredProducts($custID);
                 include 'create_incident.php';
             }
         };
@@ -58,20 +67,22 @@ switch($action) {
         };
 
         if(empty($errors)) {
-            createNewIncident($custID, $code, $title, $description);
+            $incidentDB->createNewIncident($custID, $code, $title, $description);
             header("Location: success.php");
         } else {
             session_start();
             $_SESSION['errors'] = $errors;
             $_SESSION['custID'] = $custID;
-            $_SESSION['customer'] = getCustomer($custID);
-            $_SESSION['registered'] = getRegisteredProducts($custID);
+            $_SESSION['customer'] = $customerDB->getCustomer($custID);
+            $_SESSION['registered'] = $registrationDB->getRegisteredProducts($custID);
             $_SESSION['values'] = $values;
             header("Location: create_incident.php?errors");
         };
         break;
     default:
         header("Location: get_customer.php");
+        session_start();
+        $_SESSION['values'] = false;
         break;
 };
 ?>

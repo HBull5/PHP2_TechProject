@@ -1,10 +1,17 @@
 <?php 
-require('../model/database.php');
-require('../model/product_db.php');
-require('../model/customer_db.php');
-require('../model/registrations_db.php');
+// require('../model/database.php');
+require('../model/database__oo.php');
+// require('../model/product_db.php');
+require('../model/product_db_oo.php');
+// require('../model/customer_db.php');
+require('../model/customer_db_oo.php');
+// require('../model/registrations_db.php');
+require('../model/registrations_db_oo.php');
 
 $action = filter_input(INPUT_POST, 'action');
+$customerDB = new CustomerDB();
+$productDB = new ProductDB();
+$registrationsDB = new RegistrationsDB();
 session_start();
 
 if(empty($action)) {
@@ -15,8 +22,8 @@ switch($action) {
     case 'login':
         if(isset($_SESSION['custID'])) {
             if($action != 'logout') {
-                $registeredProducts = getRegisteredProducts($_SESSION['custID']);
-                $_SESSION['unregisteredProducts'] = getUnregisteredProducts($registeredProducts);
+                $registeredProducts = $registrationsDB->getRegisteredProducts($_SESSION['custID']);
+                $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
                 header("Location: product_registration.php");
             }
         } else {
@@ -33,7 +40,7 @@ switch($action) {
             $_SESSION['values'] = $values;
             header("Location: registration_login.php?error");
         } else {
-            $custID = getCustomerID($email);
+            $custID = $customerDB->getCustomerID($email);
             if(empty($custID)) {
                 array_push($errors, '**Invalid Email Try Again**');
                 $_SESSION['errors'] = $errors;
@@ -41,9 +48,9 @@ switch($action) {
                 header("Location: registration_login.php?error");
             } else { 
                 $_SESSION['custID'] = $custID;
-                $_SESSION['customer'] = getCustomer($custID);
-                $registeredProducts = getRegisteredProducts($custID);
-                $_SESSION['unregisteredProducts'] = getUnregisteredProducts($registeredProducts);
+                $_SESSION['customer'] = $customerDB->getCustomer($custID);
+                $registeredProducts = $registrationsDB->getRegisteredProducts($custID);
+                $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
                 header("Location: product_registration.php");
             }
         }
@@ -58,8 +65,8 @@ switch($action) {
         echo 'this should happen!';
         $custID = filter_input(INPUT_POST, 'custID');
         $productName = filter_input(INPUT_POST, 'productName');
-        $code = getProductCode($productName);
-        registerProduct($custID, $code);
+        $code = $productDB->getProductCode($productName);
+        $registrationDB->registerProduct($custID, $code);
         header("Location: success.php?code=".$code);
     break;
 };

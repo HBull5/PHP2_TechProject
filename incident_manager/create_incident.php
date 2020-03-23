@@ -6,7 +6,10 @@
     $error = false;
     if(filter_has_var(INPUT_GET, 'errors')) {
         require('../model/database.php');
-        require('../model/product_db.php');
+        require('../model/database__oo.php');
+        // require('../model/product_db.php');
+        require('../model/product_db_oo.php');
+        $productDB = new ProductDB();
         session_start();
         $errors = $_SESSION['errors'];
         $custID = $_SESSION['custID'];
@@ -30,7 +33,7 @@
     <label>Product:</label>
     <select name="code">
         <?php foreach($registered as $product) : ?>
-            <option value="<?php echo $product; ?>"><?php echo getProductName($product); ?></option>
+            <option value="<?php echo $product; ?>"><?php echo $productDB->getProductName($product); ?></option>
         <?php endforeach; ?>
     </select>
     <br>

@@ -1,8 +1,11 @@
 <?php
-require('../model/database.php');
-require('../model/product_db.php');
+// require('../model/database.php');
+// require('../model/product_db.php');
+require('../model/database__oo.php');
+require('../model/product_db_oo.php');
 
 $action = filter_input(INPUT_POST, 'action');
+$productDB = new ProductDB();
 
 if(empty($action)) {
     $action = filter_input(INPUT_GET, 'action');
@@ -11,7 +14,7 @@ if(empty($action)) {
 switch($action) {
     case 'delete':
         $code = filter_input(INPUT_POST, 'code');
-        deleteProducts($code);
+        $productDB->deleteProducts($code);
         header("Location: .");
         break;
     case 'showAdd':
@@ -56,7 +59,7 @@ switch($action) {
         };
 
         if(empty($errors)) {
-            addProduct($code, $name, $version, $date);
+            $productDB->addProduct($code, $name, $version, $date);
             header("Location: .");
         } else {
             session_start();
@@ -66,7 +69,7 @@ switch($action) {
         };
         break;
     default: 
-        $products = getProducts();
+        $products = $productDB->getProducts();
         include './product_list.php';
         break;
 };

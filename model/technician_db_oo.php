@@ -8,12 +8,18 @@ class TechnicianDB {
     }
 
     public function getTechs() {
-        $query = 'SELECT * FROM technicians';
-        $statement = $this->db->prepare($query);
-        $statement->execute();
-        $technicians = $statement->fetchAll();
-        $statement->closeCursor();
-        return $technicians;
+        try {
+            $query = 'SELECT * FROM technicians';
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $technicians = $statement->fetchAll();
+            $statement->closeCursor();
+            return $technicians;
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
     }
 
     public function deleteTech($techID) {

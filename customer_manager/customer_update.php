@@ -1,7 +1,9 @@
 <?php 
-    require('../model/database.php');
-    require('../model/countries_db.php');
+    // require('../model/database.php');
+    require('../model/database__oo.php');
+    require('../model/countries_db_oo.php');
     include '../view/header.php';
+    $countriesDB = new CountryDB();
     session_start();
     $customer = $_SESSION['customer'];
     $countries = $_SESSION['countries'];
@@ -77,10 +79,10 @@
         <label>Country Code: </label>
         <select name="country">
         <?php foreach($countries as $country) : ?>
-        <?php if(getCountryCode($country) == $customer['countryCode']) : ?>
-            <option selected value="<?php echo ($error) ? $values[6] : getCountryCode($country) ?>"><?php echo ($error) ? getCountryName($values[6]) : $country ?></option>
+        <?php if($countriesDB->getCountryCode($country) == $customer['countryCode']) : ?>
+            <option selected value="<?php echo ($error) ? $values[6] : $countriesDB->getCountryCode($country) ?>"><?php echo ($error) ? $countriesDB->getCountryName($values[6]) : $country ?></option>
         <?php else : ?>
-            <option value="<?php echo getCountryCode($country) ?>"><?php echo $country ?></option>
+            <option value="<?php echo $countriesDB->getCountryCode($country) ?>"><?php echo $country ?></option>
         <?php endif; ?>
         <?php endforeach; ?>
         </select>

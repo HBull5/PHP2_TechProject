@@ -1,7 +1,10 @@
 <?php 
 include '../view/header.php';
-require('../model/database.php');
-require('../model/customer_db.php');
+// require('../model/database.php');
+require('../model/database__oo.php');
+// require('../model/customer_db.php');
+require('../model/customer_db_oo.php');
+$customerDB = new CustomerDB();
 ?>
 <div id="main">
 <h1>Customer Search</h1>
@@ -13,7 +16,7 @@ require('../model/customer_db.php');
 <?php if(filter_has_var(INPUT_GET, 'search')) : ?>
     <?php 
     $search = filter_input(INPUT_GET, 'search');
-    $results = getSearchResults($search);
+    $results = $customerDB->getSearchResults($search);
     ?>
     <h1>Results</h1>
     <table>
