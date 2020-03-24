@@ -23,22 +23,22 @@ class TechnicianDB {
     }
 
     public function deleteTech($techID) {
-        $query = 'DELETE FROM technicians WHERE techID = :techID';
+        $query = 'DELETE FROM technicians WHERE techID = ?';
         $statement = $this->db->prepare($query);
-        $statement->bindValue(':techID', $techID);
+        $statement->bindValue(1, $techID);
         $statement->execute();
         $statement->closeCursor();
     }
 
     public function addTech($fName, $lName, $email, $phone, $pass) {
         $query = 'INSERT INTO technicians (firstName, lastName, email, phone, `password`)
-                  VALUES (:fName, :lName, :email, :phone, :pass)';
+                  VALUES (?, ?, ?, ?, ?)';
         $statement = $this->db->prepare($query);
-        $statement->bindValue(':fName', $fName);
-        $statement->bindValue(':lName', $lName);
-        $statement->bindValue(':email', $email);
-        $statement->bindValue(':phone', $phone);
-        $statement->bindValue(':pass', $pass);
+        $statement->bindValue(1, $fName);
+        $statement->bindValue(2, $lName);
+        $statement->bindValue(3, $email);
+        $statement->bindValue(4, $phone);
+        $statement->bindValue(5, $pass);
         $statement->execute();
         $statement->closeCursor();
     }

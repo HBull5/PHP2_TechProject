@@ -9,9 +9,9 @@ class CustomerDB {
 
     public function getSearchResults($search) {
         try {
-            $query = "SELECT * FROM customers WHERE lastName LIKE CONCAT('%', :search, '%')";
+            $query = "SELECT * FROM customers WHERE lastName LIKE CONCAT('%', ?, '%')";
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':search', $search);
+            $statement->bindValue(1, $search);
             $statement->execute();
             $results = $statement->fetchAll();
             $statement->closeCursor();
@@ -25,9 +25,9 @@ class CustomerDB {
 
     public function getCustomer($custID) {
         try {
-            $query = "SELECT * FROM customers WHERE customerID = :custID";
+            $query = "SELECT * FROM customers WHERE customerID = ?";
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':custID', $custID);
+            $statement->bindValue(1, $custID);
             $statement->execute();
             $results = $statement->fetch();
             $statement->closeCursor();
@@ -41,9 +41,9 @@ class CustomerDB {
 
     public function getCustomerID($email) {
         try {
-            $query = "SELECT customerID FROM customers WHERE email = :email";
+            $query = "SELECT customerID FROM customers WHERE email = ?";
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':email', $email);
+            $statement->bindValue(1, $email);
             $statement->execute();
             $custID = $statement->fetchColumn();
             $statement->closeCursor();
@@ -57,19 +57,19 @@ class CustomerDB {
 
     public function updateCustomer($custID, $fName, $lName, $address, $city, $state, $zip, $country, $phone, $email, $pass) {
         try {
-            $query = "UPDATE customers SET firstName = :fName, lastName = :lName, `address` = :address, city = :city, `state` = :state, postalCode = :zip, countryCode = :country, phone = :phone, email = :email, `password` = :pass WHERE customerID = :custID";
+            $query = "UPDATE customers SET firstName = ?, lastName = ?, `address` = ?, city = ?, `state` = ?, postalCode = ?, countryCode = ?, phone = ?, email = ?, `password` = ? WHERE customerID = ?";
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':custID', $custID);
-            $statement->bindValue(':fName', $fName);
-            $statement->bindValue(':lName', $lName);
-            $statement->bindValue(':address', $address);
-            $statement->bindValue(':city', $city);
-            $statement->bindValue(':state', $state);
-            $statement->bindValue(':zip', $zip);
-            $statement->bindValue(':country', $country);
-            $statement->bindValue(':phone', $phone);
-            $statement->bindValue(':email', $email);
-            $statement->bindValue(':pass', $pass);
+            $statement->bindValue(11, $custID);
+            $statement->bindValue(1, $fName);
+            $statement->bindValue(2, $lName);
+            $statement->bindValue(3, $address);
+            $statement->bindValue(4, $city);
+            $statement->bindValue(5, $state);
+            $statement->bindValue(6, $zip);
+            $statement->bindValue(7, $country);
+            $statement->bindValue(8, $phone);
+            $statement->bindValue(9, $email);
+            $statement->bindValue(10, $pass);
             $statement->execute();
             $statement->closeCursor();
         } catch(PDOException $e) {

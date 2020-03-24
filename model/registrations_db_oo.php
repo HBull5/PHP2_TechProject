@@ -9,10 +9,10 @@ class RegistrationsDB {
 
     public function registerProduct($custID, $code) {
         try {
-            $query = "INSERT INTO registrations VALUES(:customerID, :productCode, NOW())";
+            $query = "INSERT INTO registrations VALUES(?, ?, NOW())";
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':customerID', $custID);
-            $statement->bindValue(':productCode', $code);
+            $statement->bindValue(1, $custID);
+            $statement->bindValue(2, $code);
             $statement->execute();
             $statement->closeCursor();
         } catch(PDOException $e) {
@@ -24,9 +24,9 @@ class RegistrationsDB {
 
     public function getRegisteredProducts($custID) {
         try {
-            $query = "SELECT productCode FROM registrations WHERE customerID = :customerID";
+            $query = "SELECT productCode FROM registrations WHERE customerID = ?";
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':customerID', $custID);
+            $statement->bindValue(1, $custID);
             $statement->execute();
             $registered = $statement->fetchAll(PDO::FETCH_COLUMN);
             $statement->closeCursor();

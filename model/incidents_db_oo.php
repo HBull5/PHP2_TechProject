@@ -9,12 +9,12 @@ class IncidentsDB {
 
     public function createNewIncident($custID, $code, $title, $description) {
         try {
-            $query = 'INSERT INTO incidents (customerID, productCode, dateOpened, title, description) VALUES(:customerID, :productCode, NOW(), :title, :description)';
+            $query = 'INSERT INTO incidents (customerID, productCode, dateOpened, title, description) VALUES(?, ?, NOW(), ?, ?)';
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':customerID', $custID);
-            $statement->bindValue(':productCode', $code);
-            $statement->bindValue(':title', $title);
-            $statement->bindValue(':description', $description);
+            $statement->bindValue(1, $custID);
+            $statement->bindValue(2, $code);
+            $statement->bindValue(3, $title);
+            $statement->bindValue(4, $description);
             $statement->execute();
             $statement->closeCursor();
         } catch(PDOException $e) {

@@ -24,9 +24,9 @@ class CountryDB {
 
     public function getCountryCode($countryName) {
         try {
-            $query = 'SELECT countryCode FROM countries WHERE countryName = :countryName';
+            $query = 'SELECT countryCode FROM countries WHERE countryName = ?';
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':countryName', $countryName);
+            $statement->bindValue(1, $countryName);
             $statement->execute();
             $countryCode = $statement->fetchColumn();
             $statement->closeCursor();
@@ -40,9 +40,9 @@ class CountryDB {
 
     public function getCountryName($countryCode) {
         try {
-            $query = 'SELECT countryName FROM countries WHERE countryCode = :countryCode';
+            $query = 'SELECT countryName FROM countries WHERE countryCode = ?';
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':countryCode', $countryCode);
+            $statement->bindValue(1, $countryCode);
             $statement->execute();
             $countryName = $statement->fetchColumn();
             $statement->closeCursor();

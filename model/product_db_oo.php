@@ -24,9 +24,9 @@ class ProductDB {
 
     public function getProductCode($productName) {
         try {
-            $query = 'SELECT productCode FROM products WHERE name = :name';
+            $query = 'SELECT productCode FROM products WHERE name = ?';
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':name', $productName);
+            $statement->bindValue(1, $productName);
             $statement->execute();
             $code = $statement->fetchColumn();
             $statement->closeCursor();
@@ -40,9 +40,9 @@ class ProductDB {
 
     public function getProductName($code) {
         try {
-            $query = 'SELECT name FROM products WHERE productCode = :productCode';
+            $query = 'SELECT name FROM products WHERE productCode = ?';
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':productCode', $code);
+            $statement->bindValue(1, $code);
             $statement->execute();
             $name = $statement->fetchColumn();
             $statement->closeCursor();
@@ -57,9 +57,9 @@ class ProductDB {
     public function deleteProducts($code) {
         try {
             $query = 'DELETE FROM products
-                    WHERE productCode =  :productCode';
+                    WHERE productCode =  ?';
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':productCode', $code);
+            $statement->bindValue(1, $code);
             $statement->execute();
             $statement->closeCursor();
         } catch(PDOException $e) {
@@ -73,12 +73,12 @@ class ProductDB {
         try {
             $query = 'INSERT INTO products
                     (productCode, name, version, releaseDate)
-                    VALUES(:code, :name, :version, DATE_FORMAT(:releaseDate, "%Y-%m-%d"))';
+                    VALUES(?, ?, ?, DATE_FORMAT(?, "%Y-%m-%d"))';
             $statement = $this->db->prepare($query);
-            $statement->bindValue(':code', $code);
-            $statement->bindValue(':name', $name);
-            $statement->bindValue(':version', $version);
-            $statement->bindValue(':releaseDate', $date);
+            $statement->bindValue(1, $code);
+            $statement->bindValue(2, $name);
+            $statement->bindValue(3, $version);
+            $statement->bindValue(4, $date);
             $statement->execute();
             $statement->closeCursor();
         } catch(PDOException $e) {
