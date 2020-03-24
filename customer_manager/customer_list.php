@@ -38,5 +38,10 @@ $customerDB = new CustomerDB();
         <?php endforeach; ?>
     </table>
 <?php endif; ?>
+<form action="." method="post">
+    <h1>Add a new customer</h1>
+    <input type="hidden" name="action" value="addCustomer">
+    <input type="submit" value="Add Customer">
+</form>
 </div>
 <?php include '../view/footer.php' ?>

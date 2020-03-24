@@ -79,5 +79,28 @@ class CustomerDB {
         }
     }
 
+    public function addCustomer($fName, $lName, $address, $city, $state, $zip, $country, $phone, $email, $pass) {
+        try {
+            $query = "INSERT INTO customers (firstName, lastName, address, city, state, postalCode, countryCode, phone, email, password) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $statement = $this->db->prepare($query);
+            $statement->bindValue(1, $fName);
+            $statement->bindValue(2, $lName);
+            $statement->bindValue(3, $address);
+            $statement->bindValue(4, $city);
+            $statement->bindValue(5, $state);
+            $statement->bindValue(6, $zip);
+            $statement->bindValue(7, $country);
+            $statement->bindValue(8, $phone);
+            $statement->bindValue(9, $email);
+            $statement->bindValue(10, $pass);
+            $statement->execute();
+            $statement->closeCursor();
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
+    }
+
 }
 ?>

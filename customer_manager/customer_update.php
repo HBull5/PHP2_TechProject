@@ -121,5 +121,4 @@ $countries = $_SESSION['countries'];
     </form>
     <p><a href=".">Search Customers</a></p>
 </div>
-<script src="app.js"></script>
 <?php include '../view/footer.php'; ?>
