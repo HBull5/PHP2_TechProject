@@ -44,9 +44,6 @@ switch($action) {
         $description = filter_input(INPUT_POST, 'description');
         $values = [$title];
 
-        // TESTING
-        echo $custID.' '.$code.' '.$title.' '.$description;
-
         if(empty($code)) {
             array_push($errors, '**You must register you product to file an incident**');
         };

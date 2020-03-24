@@ -22,6 +22,22 @@ class TechnicianDB {
         }
     }
 
+    public function getTechName($techID) {
+        try {
+            $query = 'SELECT CONCAT(firstName, " ", lastName) FROM technicians WHERE techID = ?';
+            $statement = $this->db->prepare($query);
+            $statement->bindValue(1, $techID);
+            $statement->execute();
+            $techName = $statement->fetch();
+            $statement->closeCursor();
+            return $techName;
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
+    }
+
     public function deleteTech($techID) {
         $query = 'DELETE FROM technicians WHERE techID = ?';
         $statement = $this->db->prepare($query);
