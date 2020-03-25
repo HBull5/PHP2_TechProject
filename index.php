@@ -12,7 +12,7 @@
 
     <h2>Technicians</h2>
     <ul class="nav">
-        <li><a href="under_construction.php">Update Incident</a></li>
+        <li><a href="incident_updater">Update Incident</a></li>
     </ul>
 
     <h2>Customers</h2>

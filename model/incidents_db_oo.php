@@ -85,5 +85,36 @@ class IncidentsDB {
         }
     }
 
+    public function getIncidentsAssignedToTechID($techID) {
+        try {
+            $query = "SELECT incidentID, CONCAT(firstName, ' ', lastName) AS fullName, productCode, dateOpened, title, description FROM incidents JOIN customers ON incidents.customerID = customers.customerID WHERE techID = ?";
+            $statement = $this->db->prepare($query);
+            $statement->bindValue(1, $techID);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $statement->closeCursor();
+            return $results;
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
+    }
+
+    public function updateIncident($dateClosed, $description) {
+        try {
+            $query = 'UPDATE incidents SET dateClosed = ?,  description = ?';
+            $statement = $this->db->prepare($query);
+            $statement->bindValue(1, $dateClosed);
+            $statement->bindValue(2, $description);
+            $statement->execute();
+            $statement->closeCursor();
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
+    }
+
 }
 ?>
