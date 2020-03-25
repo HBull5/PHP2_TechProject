@@ -54,7 +54,8 @@ switch($action) {
         $errors = [];
         $date = filter_input(INPUT_POST, 'dateClosed');
         $description = filter_input(INPUT_POST, 'description'); 
-        $values = [$date];
+        $incidentID = $_SESSION['incidentID'];
+        $values = [$date, $description];
         $dateArray = date_parse($date);
         if(!empty($date)) {
             if(empty($dateArray['year']) || empty($dateArray['month']) || empty($dateArray['day'])) {
@@ -67,10 +68,13 @@ switch($action) {
                     $date = $dateArray['year'].'-'.$dateArray['month'].'-'.$dateArray['day'];
                 }
             };
+        } else {
+            $incidentDB->updateIncidentDescription($incidentID, $description);
+            header("Location: success.php");
         }
             
         if(empty($errors)) {
-            $incidentDB->updateIncident($date, $description);
+            $incidentDB->updateIncident($incidentID, $date, $description);
             header("Location: success.php");
         } else {
             $_SESSION['errors'] = $errors;

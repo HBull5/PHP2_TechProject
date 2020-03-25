@@ -85,6 +85,21 @@ class IncidentsDB {
         }
     }
 
+    public function getAllAssignedIncidents() {
+        try {
+            $query = "SELECT incidentID, techID, CONCAT(firstName, ' ', lastName) AS fullName, productCode, dateOpened, dateClosed, title, description FROM incidents JOIN customers ON incidents.customerID = customers.customerID WHERE incidents.techID IS NOT NULL";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $statement->closeCursor();
+            return $results;
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
+    }
+
     public function getIncidentsAssignedToTechID($techID) {
         try {
             $query = "SELECT incidentID, CONCAT(firstName, ' ', lastName) AS fullName, productCode, dateOpened, title, description FROM incidents JOIN customers ON incidents.customerID = customers.customerID WHERE techID = ?";
@@ -101,12 +116,28 @@ class IncidentsDB {
         }
     }
 
-    public function updateIncident($dateClosed, $description) {
+    public function updateIncident($incidentID, $dateClosed, $description) {
         try {
-            $query = 'UPDATE incidents SET dateClosed = ?,  description = ?';
+            $query = 'UPDATE incidents SET dateClosed = ?,  description = ? WHERE incidentID = ?';
             $statement = $this->db->prepare($query);
             $statement->bindValue(1, $dateClosed);
             $statement->bindValue(2, $description);
+            $statement->bindValue(3, $incidentID);
+            $statement->execute();
+            $statement->closeCursor();
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
+    }
+
+    public function updateIncidentDescription($incidentID, $description) {
+        try {
+            $query = 'UPDATE incidents SET dateClosed = NULL, description = ? WHERE incidentID = ?';
+            $statement = $this->db->prepare($query);
+            $statement->bindValue(1, $description);
+            $statement->bindValue(2, $incidentID);
             $statement->execute();
             $statement->closeCursor();
         } catch(PDOException $e) {

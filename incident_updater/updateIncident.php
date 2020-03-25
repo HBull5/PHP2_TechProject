@@ -12,7 +12,11 @@ function dateFormatter($dateStr) {
     return ($dateArr['month'].'/'.$dateArr['day'].'/'.$dateArr['year']);
 };
 $dateOpened = dateFormatter($incident['dateOpened']); 
-$dateClosed = dateFormatter($incident['dateClosed']);
+if($incident['dateClosed'] != NULL) {
+    $dateClosed = dateFormatter($incident['dateClosed']);
+} else {
+    $dateClosed = '';
+}
 ?>
 <div id="main">
     <h1>Update Incident</h1>
@@ -47,7 +51,7 @@ $dateClosed = dateFormatter($incident['dateClosed']);
         <?php echo $incident['title'] ?>
         <br>
         <label>Description: </label>
-        <textarea id="description" name="description" cols="30" rows="10"><?php echo $incident['description']; ?></textarea>
+        <textarea id="description" name="description" cols="30" rows="10"><?php echo $error ? $values[1] : $incident['description'] ?></textarea>
         <br>
         <input type="submit" value="Update Incident">
     </form>

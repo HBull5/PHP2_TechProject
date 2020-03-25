@@ -7,6 +7,10 @@ session_start();
 $techID = $_SESSION['techID'];
 $email = $_SESSION['email'];
 $incidents = $incidentDB->getIncidentsAssignedToTechID($techID);
+function dateFormatter($dateStr) {
+    $dateArr = date_parse($dateStr);
+    return ($dateArr['month'].'/'.$dateArr['day'].'/'.$dateArr['year']);
+};
 ?>
 <div id="main">
     <h1>Select Incident</h1>
@@ -23,7 +27,7 @@ $incidents = $incidentDB->getIncidentsAssignedToTechID($techID);
         <tr>
             <td><?php echo $incident['fullName'] ?></td>
             <td><?php echo $incident['productCode'] ?></td>
-            <td><?php echo $incident['dateOpened'] ?></td>
+            <td><?php echo dateFormatter($incident['dateOpened']) ?></td>
             <td><?php echo $incident['title'] ?></td>
             <td><?php echo $incident['description'] ?></td>
             <td><form action="." method="post">
