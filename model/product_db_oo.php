@@ -54,6 +54,21 @@ class ProductDB {
         }
     }
 
+    public function getAllProductNames() {
+        try {
+            $query = 'SELECT name FROM products';
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $names = $statement->fetchAll(PDO::FETCH_COLUMN);
+            $statement->closeCursor();
+            return $names;
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
+    }
+
     public function deleteProducts($code) {
         try {
             $query = 'DELETE FROM products

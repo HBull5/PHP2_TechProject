@@ -14,7 +14,7 @@ if(empty($action)) {
 
 switch($action) {
     case 'login':
-        if(isset($_SESSION['techID'])) {
+        if(isset($_SESSION['techIDLogin'])) {
             if($action != 'logout') {
                 header("Location: select_incident.php");
             }
@@ -38,8 +38,8 @@ switch($action) {
                 $_SESSION['errors'] = $errors;
                 $_SESSION['values'] = $values;
                 header("Location: login.php?error");
-            } else { 
-                $_SESSION['techID'] = $techID['techID'];
+            } else {
+                $_SESSION['techIDLogin'] = $techID['techID'];
                 $_SESSION['email'] = $email;
                 header("Location: select_incident.php");
             }
@@ -83,7 +83,7 @@ switch($action) {
         };
         break;
     case 'logout':
-        unset($_SESSION['techID']);
+        unset($_SESSION['techIDLogin']);
         unset($_SESSION['email']);
         header("Location: login.php");
         break;

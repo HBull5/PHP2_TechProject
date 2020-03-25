@@ -18,8 +18,13 @@ switch($action) {
     case 'login':
         if(isset($_SESSION['custID'])) {
             if($action != 'logout') {
+                echo 'HERE...';
                 $registeredProducts = $registrationsDB->getRegisteredProducts($_SESSION['custID']);
-                $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
+                if(!empty($registeredProducts)) {
+                    $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
+                } else {
+                    $_SESSION['unregisteredProducts'] = $productDB->getAllProductNames();
+                }
                 header("Location: product_registration.php");
             }
         } else {
@@ -46,7 +51,11 @@ switch($action) {
                 $_SESSION['custID'] = $custID;
                 $_SESSION['customer'] = $customerDB->getCustomer($custID);
                 $registeredProducts = $registrationsDB->getRegisteredProducts($custID);
-                $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
+                if(!empty($registeredProducts)) {
+                    $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
+                } else {
+                    $_SESSION['unregisteredProducts'] = $productDB->getAllProductNames();
+                }
                 header("Location: product_registration.php");
             }
         }

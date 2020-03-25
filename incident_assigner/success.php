@@ -7,6 +7,7 @@ session_start();
 $techID = $_SESSION['techID'];
 $incidentID = $_SESSION['incidentID'];
 $incidentDB->assignIncident($techID, $incidentID);
+unset($_SESSION['techID']);
 ?>
 <div id="main">
     <h1>Assign Incident</h1>

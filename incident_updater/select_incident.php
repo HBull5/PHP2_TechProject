@@ -4,7 +4,7 @@ require('../model/database__oo.php');
 require('../model/incidents_db_oo.php');
 $incidentDB = new IncidentsDB();
 session_start();
-$techID = $_SESSION['techID'];
+$techID = $_SESSION['techIDLogin'];
 $email = $_SESSION['email'];
 $incidents = $incidentDB->getIncidentsAssignedToTechID($techID);
 function dateFormatter($dateStr) {
