@@ -38,6 +38,22 @@ class TechnicianDB {
         }
     }
 
+    public function getTechEmail($techID) {
+        try {
+            $query= "SELECT email FROM technicians WHERE techID = ?";
+            $statement = $this->db->prepare($query);
+            $statement->bindValue(1, $techID);
+            $statement->execute();
+            $techEmail = $statement->fetch(PDO::FETCH_COLUMN);
+            $statement->closeCursor();
+            return $techEmail;
+        } catch(PDOException $e) {
+            $error_message = $e->getMessage();
+            include('../errors/database_error.php');
+            exit();
+        }
+    }
+
     public function getTechID($email) {
         try {
             $query = 'SELECT techID FROM technicians WHERE email = ?';

@@ -36,7 +36,9 @@ switch($action) {
                 $_SESSION['values'] = $values;
                 header("Location: login.php?error&type=".$type);
             } else {
-                echo 'successful login!!!!';
+                session_unset();
+                $_SESSION['loginID'] = $results;
+                header("Location: ../menu");
             }
         } else {
             $_SESSION['errors'] = $errors;

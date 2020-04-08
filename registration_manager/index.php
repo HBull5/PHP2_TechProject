@@ -11,60 +11,27 @@ $registrationsDB = new RegistrationsDB();
 session_start();
 
 if(empty($action)) {
-    $action = 'login';
+    $action = 'register';
 }
 
 switch($action) {
-    case 'login':
-        if(isset($_SESSION['custID'])) {
-            if($action != 'logout') {
-                echo 'HERE...';
-                $registeredProducts = $registrationsDB->getRegisteredProducts($_SESSION['custID']);
-                if(!empty($registeredProducts)) {
-                    $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
-                } else {
-                    $_SESSION['unregisteredProducts'] = $productDB->getAllProductNames();
-                }
-                header("Location: product_registration.php");
-            }
-        } else {
-            header("Location: registration_login.php");
-        }
-        break;
     case 'register':
-        $errors = [];
-        $email = filter_input(INPUT_POST, 'email');
-        $values = [$email];
-        if(empty($email)) {
-            array_push($errors, '**Email field cannot be empty**');
-            $_SESSION['errors'] = $errors;
-            $_SESSION['values'] = $values;
-            header("Location: registration_login.php?error");
+        $custID = $_SESSION['loginID']['customerID'];
+        $registeredProducts = $registrationsDB->getRegisteredProducts($custID);
+        if(!empty($registeredProducts)) {
+            $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
         } else {
-            $custID = $customerDB->getCustomerID($email);
-            if(empty($custID)) {
-                array_push($errors, '**Invalid Email Try Again**');
-                $_SESSION['errors'] = $errors;
-                $_SESSION['values'] = $values;
-                header("Location: registration_login.php?error");
-            } else { 
-                $_SESSION['custID'] = $custID;
-                $_SESSION['customer'] = $customerDB->getCustomer($custID);
-                $registeredProducts = $registrationsDB->getRegisteredProducts($custID);
-                if(!empty($registeredProducts)) {
-                    $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
-                } else {
-                    $_SESSION['unregisteredProducts'] = $productDB->getAllProductNames();
-                }
-                header("Location: product_registration.php");
-            }
+            $_SESSION['unregisteredProducts'] = $productDB->getAllProductNames();
         }
-        break;
-    case 'logout':
-        unset($_SESSION['custID']);
-        unset($_SESSION['customer']);
-        unset($_SESSION['unregisteredProducts']);
-        header("Location: registration_login.php");
+        $_SESSION['custID'] = $custID;
+        $_SESSION['customer'] = $customerDB->getCustomer($custID);
+        $registeredProducts = $registrationsDB->getRegisteredProducts($custID);
+        if(!empty($registeredProducts)) {
+            $_SESSION['unregisteredProducts'] = $registrationsDB->getUnregisteredProducts($registeredProducts);
+        } else {
+            $_SESSION['unregisteredProducts'] = $productDB->getAllProductNames();
+        }
+        header("Location: product_registration.php");
         break;
     case 'complete':
         $custID = filter_input(INPUT_POST, 'custID');
@@ -73,5 +40,11 @@ switch($action) {
         $registrationsDB->registerProduct($custID, $code);
         header("Location: success.php?code=".$code);
     break;
+    case 'logout':
+        unset($_SESSION['custID']);
+        unset($_SESSION['customer']);
+        unset($_SESSION['unregisteredProducts']);
+        header("Location: ../login/login.php?type=customer");
+        break;
 };
 ?>

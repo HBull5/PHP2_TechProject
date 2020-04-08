@@ -9,12 +9,12 @@ class LoginDB {
 
     public function adminLogin($loginID, $password) {
         try {
-            $query = "SELECT * FROM administrators WHERE username = ? AND password = ?";
+            $query = "SELECT username FROM administrators WHERE username = ? AND password = ?";
             $statement = $this->db->prepare($query);
             $statement->bindValue(1, $loginID);
             $statement->bindValue(2, $password);
             $statement->execute();
-            $results = $statement->fetchAll();
+            $results = $statement->fetch();
             $statement->closeCursor();
             return $results;
         } catch(PDOException $e) {
@@ -26,12 +26,12 @@ class LoginDB {
 
     public function techLogin($loginID, $password) {
         try {
-            $query = "SELECT * FROM technicians WHERE email = ? AND password = ?";
+            $query = "SELECT techID FROM technicians WHERE email = ? AND password = ?";
             $statement = $this->db->prepare($query);
             $statement->bindValue(1, $loginID);
             $statement->bindValue(2, $password);
             $statement->execute();
-            $results = $statement->fetchAll();
+            $results = $statement->fetch();
             $statement->closeCursor();
             return $results;
         } catch(PDOException $e) {
@@ -43,12 +43,12 @@ class LoginDB {
 
     public function customerLogin($loginID, $password) {
         try {
-            $query = "SELECT * FROM customers WHERE email = ? AND password = ?";
+            $query = "SELECT customerID FROM customers WHERE email = ? AND password = ?";
             $statement = $this->db->prepare($query);
             $statement->bindValue(1, $loginID);
             $statement->bindValue(2, $password);
             $statement->execute();
-            $results = $statement->fetchAll();
+            $results = $statement->fetch();
             $statement->closeCursor();
             return $results;
         } catch(PDOException $e) {

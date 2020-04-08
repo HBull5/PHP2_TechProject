@@ -9,41 +9,14 @@ session_start();
 $action = filter_input(INPUT_POST, 'action');
 
 if(empty($action)) {
-    $action = 'login';
+    $action = 'selectIncident';
 }
 
 switch($action) {
-    case 'login':
-        if(isset($_SESSION['techIDLogin'])) {
-            if($action != 'logout') {
-                header("Location: select_incident.php");
-            }
-        } else {
-            header("Location: login.php");
-        }
-        break;
     case 'selectIncident':
-        $errors = [];
-        $email = filter_input(INPUT_POST, 'email');
-        $values = [$email];
-        if(empty($email)) {
-            array_push($errors, '**Email field cannot be empty**');
-            $_SESSION['errors'] = $errors;
-            $_SESSION['values'] = $values;
-            header("Location: login.php?error");
-        } else {
-            $techID = $technicianDB->getTechID($email);
-            if(empty($techID)) {
-                array_push($errors, '**Invalid Email Try Again**');
-                $_SESSION['errors'] = $errors;
-                $_SESSION['values'] = $values;
-                header("Location: login.php?error");
-            } else {
-                $_SESSION['techIDLogin'] = $techID['techID'];
-                $_SESSION['email'] = $email;
-                header("Location: select_incident.php");
-            }
-        }
+        $_SESSION['techIDLogin'] = $_SESSION['loginID']['techID'];
+        $_SESSION['email'] = $technicianDB->getTechEmail($_SESSION['loginID']['techID']);
+        header("Location: select_incident.php");
         break;
     case 'update':
         $incidentID = filter_input(INPUT_POST, 'incidentID');
@@ -85,7 +58,7 @@ switch($action) {
     case 'logout':
         unset($_SESSION['techIDLogin']);
         unset($_SESSION['email']);
-        header("Location: login.php");
+        header("Location: ../login/login.php?type=tech");
         break;
 }
 ?>
