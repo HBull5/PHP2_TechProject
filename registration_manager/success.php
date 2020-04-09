@@ -1,6 +1,7 @@
 <?php 
 include '../view/header.php';
-$code = filter_input(INPUT_GET, 'code'); 
+$code = filter_input(INPUT_GET, 'code');
+session_start(); 
 if(!isset($_SESSION['validated'])) {
     header("Location: ../login/login.php?type=customer");
 } else if($_SESSION['validated'] != 'customer') {

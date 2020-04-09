@@ -10,11 +10,19 @@
     </head>
 <?php 
     $dir = getcwd();
-    if($dir === '/opt/lampp/htdocs/PHP/PHP2/PHP2_TechProject') {
-        $cd = '.';
+    $explodedDir = explode("/", $dir);
+    $currentDir = end($explodedDir);
+    if($currentDir === 'incident_updater') {
+        $home = '.';
+    } else if($currentDir === 'registration_manager') {
+        $home = '.';
+    } else if($currentDir === 'PHP2_TechProject') {
+        $home = '.';
+    } else if($currentDir === 'login') {
+        $home = '..';
     } else {
-        $cd = '..';
-    };
+        $home = '../menu/adminMenu.php';
+    }
 ?>
     <!-- the body section -->
     <body>
@@ -23,7 +31,7 @@
             <h1>SportsPro Technical Support</h1>
             <p>Sports management software for the sports enthusiast</p>
             <ul class="nav flex row">
-                <li><a href="<?php echo $cd; ?>">Home</a></li>
+                <li><a href="<?php echo $home; ?>">Home</a></li>
             </ul>
         </div>
        
