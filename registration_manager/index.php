@@ -14,12 +14,6 @@ if(empty($action)) {
     $action = 'register';
 }
 
-if(!isset($_SESSION['validated'])) {
-    header("Location: ../login/login.php?type=customer");
-} else if($_SESSION['validated'] != 'customer') {
-    header("Location: ../login/login.php?type=customer");
-}
-
 switch($action) {
     case 'register':
         $custID = $_SESSION['loginID']['customerID'];

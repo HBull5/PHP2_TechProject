@@ -13,7 +13,6 @@ if(!isset($_SESSION['validated'])) {
 <?php
     $error = false;
     if(filter_has_var(INPUT_GET, 'error')) {
-        // session_start();
         $errors = $_SESSION['errors'];
         $values = $_SESSION['values'];
         foreach($errors as $error) {
@@ -38,7 +37,7 @@ if(!isset($_SESSION['validated'])) {
     <span>Use 'XXX-XXX-XXXX' format</span>
     <br>
     <label>Password: </label>
-    <input type="text" name="password" value="<?php echo ($error) ? $values[4] : "" ?>">
+    <input type="password" name="password" value="<?php echo ($error) ? $values[4] : "" ?>">
     <br>
     <label>&nbsp;</label>
     <input type="submit" value="Add Technician">

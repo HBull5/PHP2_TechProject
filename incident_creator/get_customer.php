@@ -13,7 +13,6 @@ if(!isset($_SESSION['validated'])) {
 <?php 
 $error = false;
 if(filter_has_var(INPUT_GET, 'errors')) {
-    //session_start();
     $errors = $_SESSION['errors'];
     $values = $_SESSION['values'];
     foreach($errors as $error) {

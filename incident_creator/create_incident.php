@@ -17,7 +17,6 @@ if(!isset($_SESSION['validated'])) {
         require('../model/database__oo.php');
         require('../model/product_db_oo.php');
         $productDB = new ProductDB();
-        //session_start();
         $errors = $_SESSION['errors'];
         $custID = $_SESSION['custID'];
         $customer = $_SESSION['customer'];
