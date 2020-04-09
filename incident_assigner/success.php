@@ -8,6 +8,11 @@ $techID = $_SESSION['techID'];
 $incidentID = $_SESSION['incidentID'];
 $incidentDB->assignIncident($techID, $incidentID);
 unset($_SESSION['techID']);
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
 ?>
 <div id="main">
     <h1>Assign Incident</h1>

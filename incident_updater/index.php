@@ -58,7 +58,8 @@ switch($action) {
     case 'logout':
         unset($_SESSION['techIDLogin']);
         unset($_SESSION['email']);
-        header("Location: ../login/login.php?type=tech");
+        unset($_SESSION['validated']);
+        header("Location: ..");
         break;
 }
 ?>

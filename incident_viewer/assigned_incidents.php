@@ -12,6 +12,12 @@ function dateFormatter($dateStr) {
     $dateArr = date_parse($dateStr);
     return ($dateArr['month'].'/'.$dateArr['day'].'/'.$dateArr['year']);
 };
+session_start();
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
 ?>
 <div id="main">
     <h1>Assigned Incidents</h1>

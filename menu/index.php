@@ -12,7 +12,8 @@ if(array_key_exists('username', $loginID)) {
 
 if($action === 'logout') {
     unset($_SESSION['loginID']);
-    header("Location: ../login/login.php?type=admin");
+    unset($_SESSION['validated']);
+    header("Location: ..");
 } else {
     switch($menuType) {
         case 'admin':

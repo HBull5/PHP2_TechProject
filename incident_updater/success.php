@@ -2,6 +2,11 @@
 include '../view/header.php';
 session_start();
 $email = $_SESSION['email'];
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=tech");
+} else if($_SESSION['validated'] != 'tech') {
+    header("Location: ../login/login.php?type=tech");
+}
 ?>
 <div id="main">
     <h1>Update Incident</h1>

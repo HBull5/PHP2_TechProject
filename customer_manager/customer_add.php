@@ -5,6 +5,11 @@ include '../view/header.php';
 $countriesDB = new CountryDB();
 session_start();
 $countries = $_SESSION['countries'];
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
 ?>
 <div id="main">
 <h1>Add/Update Customer</h1>

@@ -1,11 +1,19 @@
-<?php include '../view/header.php'; ?>
+<?php 
+include '../view/header.php';
+session_start();
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
+?>
 <div id="main">
     <h1>Add Product</h1>
     <div class="error">
     <?php 
     $error = false;
     if(filter_has_var(INPUT_GET, 'error')) {
-        session_start();
+        // session_start();
         $errors = $_SESSION['errors'];
         $values = $_SESSION['values'];
         foreach($errors as $error) {

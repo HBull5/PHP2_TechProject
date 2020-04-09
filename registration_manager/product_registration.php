@@ -4,6 +4,11 @@ session_start();
 $custID = $_SESSION['custID'];
 $customer = $_SESSION['customer'];
 $unregisteredProducts = $_SESSION['unregisteredProducts'];
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=customer");
+} else if($_SESSION['validated'] != 'customer') {
+    header("Location: ../login/login.php?type=customer");
+}
 ?>
 <div id="main">
     <h1>Register Product</h1>

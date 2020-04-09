@@ -6,6 +6,11 @@ $countriesDB = new CountryDB();
 session_start();
 $customer = $_SESSION['customer'];
 $countries = $_SESSION['countries'];
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
 ?>
 <div id="main">
     <h1>View/Update Customer</h1>

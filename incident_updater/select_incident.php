@@ -11,6 +11,11 @@ function dateFormatter($dateStr) {
     $dateArr = date_parse($dateStr);
     return ($dateArr['month'].'/'.$dateArr['day'].'/'.$dateArr['year']);
 };
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=tech");
+} else if($_SESSION['validated'] != 'tech') {
+    header("Location: ../login/login.php?type=tech");
+}
 ?>
 <div id="main">
     <h1>Select Incident</h1>

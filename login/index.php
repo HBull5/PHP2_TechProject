@@ -25,10 +25,13 @@ switch($action) {
             $results; 
             if($type === 'admin') {
                 $results = $loginDB->adminLogin($loginID, $password);
+                $validated = 'admin';
             } else if($type === 'tech') {
                 $results = $loginDB->techLogin($loginID, $password);
+                $validated = 'tech';
             } else if($type === 'customer') {
                 $results = $loginDB->customerLogin($loginID, $password);
+                $validated = 'customer';
             }
             if(empty($results)) {
                 array_push($errors, 'Invalid Credintials! Try Again!');
@@ -38,6 +41,7 @@ switch($action) {
             } else {
                 session_unset();
                 $_SESSION['loginID'] = $results;
+                $_SESSION['validated'] = $validated;
                 header("Location: ../menu");
             }
         } else {

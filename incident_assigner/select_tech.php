@@ -4,6 +4,12 @@ require('../model/database__oo.php');
 require('../model/incidents_db_oo.php');
 $incidentDB = new IncidentsDB();
 $results = $incidentDB->getAssignedIncidents();
+session_start();
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
 ?>
 <div id="main">
     <h1>Select Technician</h1>

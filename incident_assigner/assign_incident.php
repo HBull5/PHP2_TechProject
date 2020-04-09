@@ -14,6 +14,11 @@ $techName = $technicianDB->getTechName($techID);
 $incident = $incidentDB->getIncident($incidentID);
 $custID = $incident['customerID'];
 $customer = $customerDB->getCustomer($custID);
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
 ?>
 <div id="main">
     <h1>Assign Incident</h1>

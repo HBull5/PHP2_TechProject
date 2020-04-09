@@ -1,4 +1,12 @@
-<?php include '../view/header.php'; ?>
+<?php 
+include '../view/header.php'; 
+session_start();
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
+?>
 <div id="main">
 <h1>Create Incident</h1>
 <div class="error">
@@ -9,7 +17,7 @@
         require('../model/database__oo.php');
         require('../model/product_db_oo.php');
         $productDB = new ProductDB();
-        session_start();
+        //session_start();
         $errors = $_SESSION['errors'];
         $custID = $_SESSION['custID'];
         $customer = $_SESSION['customer'];

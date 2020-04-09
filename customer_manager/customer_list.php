@@ -3,6 +3,12 @@ include '../view/header.php';
 require('../model/database__oo.php');
 require('../model/customer_db_oo.php');
 $customerDB = new CustomerDB();
+session_start();
+if(!isset($_SESSION['validated'])) {
+    header("Location: ../login/login.php?type=admin");
+} else if($_SESSION['validated'] != 'admin') {
+    header("Location: ../login/login.php?type=admin");
+}
 ?>
 <div id="main">
 <h1>Customer Search</h1>
