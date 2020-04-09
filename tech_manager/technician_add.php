@@ -37,7 +37,7 @@ if(!isset($_SESSION['validated'])) {
     <span>Use 'XXX-XXX-XXXX' format</span>
     <br>
     <label>Password: </label>
-    <input type="password" name="password" value="<?php echo ($error) ? $values[4] : "" ?>">
+    <input type="text" name="password" value="<?php echo ($error) ? $values[4] : "" ?>">
     <br>
     <label>&nbsp;</label>
     <input type="submit" value="Add Technician">
