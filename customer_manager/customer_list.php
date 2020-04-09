@@ -23,26 +23,30 @@ if(!isset($_SESSION['validated'])) {
     $results = $customerDB->getSearchResults($search);
     ?>
     <h1>Results</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Email Address</th>
-            <th>City</th>
-            <th>&nbsp;</th>
-        </tr>
-        <?php foreach($results as $result) : ?>
+    <?php if(empty($results)) : ?>
+        <p>No Search Results match <?php echo $search ?></p>
+    <?php else : ?>
+        <table>
             <tr>
-                <td><?php echo $result['firstName'] . " " . $result['lastName']; ?></td>
-                <td><?php echo $result['email']; ?></td>
-                <td><?php echo $result['city']; ?></td>
-                <form action="." method="post">
-                    <input type="hidden" name="action" value="updateCustomers">
-                    <input type="hidden" name="custID" value="<?php echo $result['customerID']; ?>">
-                    <td><input type="submit" value="Select"></td>
-                </form>
+                <th>Name</th>
+                <th>Email Address</th>
+                <th>City</th>
+                <th>&nbsp;</th>
             </tr>
-        <?php endforeach; ?>
-    </table>
+            <?php foreach($results as $result) : ?>
+                <tr>
+                    <td><?php echo $result['firstName'] . " " . $result['lastName']; ?></td>
+                    <td><?php echo $result['email']; ?></td>
+                    <td><?php echo $result['city']; ?></td>
+                    <form action="." method="post">
+                        <input type="hidden" name="action" value="updateCustomers">
+                        <input type="hidden" name="custID" value="<?php echo $result['customerID']; ?>">
+                        <td><input type="submit" value="Select"></td>
+                    </form>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
 <?php endif; ?>
 <form action="." method="post">
     <h1>Add a new customer</h1>
